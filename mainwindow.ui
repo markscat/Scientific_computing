@@ -99,28 +99,6 @@
      <widget class="QWidget" name="">
       <property name="geometry">
        <rect>
-        <x>130</x>
-        <y>80</y>
-        <width>71</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>比值</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QTextEdit" name="Input_textEdit"/>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="">
-      <property name="geometry">
-       <rect>
         <x>230</x>
         <y>80</y>
         <width>73</width>
@@ -159,6 +137,28 @@
        </item>
        <item>
         <widget class="QComboBox" name="output_comboBox"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>80</y>
+        <width>71</width>
+        <height>44</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>比值</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="output_comboBox_2"/>
        </item>
       </layout>
      </widget>

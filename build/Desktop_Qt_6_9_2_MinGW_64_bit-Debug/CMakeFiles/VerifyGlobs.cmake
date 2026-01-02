@@ -42,6 +42,8 @@ endif()
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "D:/for work/temp/workshorp/PC/Qt/Scientific_computing/*.cpp")
 set(OLD_GLOB
   "D:/for work/temp/workshorp/PC/Qt/Scientific_computing/build/Desktop_Qt_6_9_2_MinGW_64_bit-Debug/CMakeFiles/3.30.5/CompilerIdCXX/CMakeCXXCompilerId.cpp"
+  "D:/for work/temp/workshorp/PC/Qt/Scientific_computing/build/Desktop_Qt_6_9_2_MinGW_64_bit-Debug/Scientific_computing_autogen/EWIEGA46WW/moc_mainwindow.cpp"
+  "D:/for work/temp/workshorp/PC/Qt/Scientific_computing/build/Desktop_Qt_6_9_2_MinGW_64_bit-Debug/Scientific_computing_autogen/mocs_compilation.cpp"
   "D:/for work/temp/workshorp/PC/Qt/Scientific_computing/main.cpp"
   "D:/for work/temp/workshorp/PC/Qt/Scientific_computing/mainwindow.cpp"
   )
@@ -62,6 +64,8 @@ endif()
 # _directory_contents at C:/Qt/6.9.2/mingw_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsMacros.cmake:55 (file)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "D:/for work/temp/workshorp/PC/Qt/Scientific_computing/*.h")
 set(OLD_GLOB
+  "D:/for work/temp/workshorp/PC/Qt/Scientific_computing/build/Desktop_Qt_6_9_2_MinGW_64_bit-Debug/Scientific_computing_autogen/include/ui_mainwindow.h"
+  "D:/for work/temp/workshorp/PC/Qt/Scientific_computing/build/Desktop_Qt_6_9_2_MinGW_64_bit-Debug/Scientific_computing_autogen/moc_predefs.h"
   "D:/for work/temp/workshorp/PC/Qt/Scientific_computing/mainwindow.h"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")

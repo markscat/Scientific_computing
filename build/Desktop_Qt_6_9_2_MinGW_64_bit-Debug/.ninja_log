@@ -1,10 +1,18 @@
 # ninja log v6
-10	126	7890470717159647	D:/for work/temp/workshorp/PC/Qt/Scientific_computing/build/Desktop_Qt_6_9_2_MinGW_64_bit-Debug/CMakeFiles/cmake.verify_globs	25de0d31767df4d5
-128	862	7890470724634625	Scientific_computing_autogen/timestamp	ffd760377b665ea8
-128	862	7890470724634625	Scientific_computing_autogen/mocs_compilation.cpp	ffd760377b665ea8
+13	447	7890481566352972	D:/for work/temp/workshorp/PC/Qt/Scientific_computing/build/Desktop_Qt_6_9_2_MinGW_64_bit-Debug/CMakeFiles/cmake.verify_globs	25de0d31767df4d5
 128	862	7890470724634625	D:/for work/temp/workshorp/PC/Qt/Scientific_computing/build/Desktop_Qt_6_9_2_MinGW_64_bit-Debug/Scientific_computing_autogen/timestamp	ffd760377b665ea8
+128	862	7890470724634625	Scientific_computing_autogen/mocs_compilation.cpp	ffd760377b665ea8
+128	862	7890470724634625	Scientific_computing_autogen/timestamp	ffd760377b665ea8
 128	862	7890470724634625	D:/for work/temp/workshorp/PC/Qt/Scientific_computing/build/Desktop_Qt_6_9_2_MinGW_64_bit-Debug/Scientific_computing_autogen/mocs_compilation.cpp	ffd760377b665ea8
 869	6228	7890470725799150	CMakeFiles/Scientific_computing.dir/Scientific_computing_autogen/mocs_compilation.cpp.obj	f382107cf858c01
 882	6503	7890470725902650	CMakeFiles/Scientific_computing.dir/main.cpp.obj	b76daf0087644bdb
 894	7479	7890470726031359	CMakeFiles/Scientific_computing.dir/mainwindow.cpp.obj	a634420c13d70fc7
 7479	7926	7890470791898765	Scientific_computing.exe	ff532b7768bdf4f
+447	1947	7890481583135122	build.ninja	cd241ef0340e77b7
+12	554	7890481583904840	D:/for work/temp/workshorp/PC/Qt/Scientific_computing/build/Desktop_Qt_6_9_2_MinGW_64_bit-Debug/CMakeFiles/cmake.verify_globs	25de0d31767df4d5
+572	890	7890481589546319	Scientific_computing_autogen/timestamp	ffd760377b665ea8
+572	890	7890481589546319	Scientific_computing_autogen/mocs_compilation.cpp	ffd760377b665ea8
+572	890	7890481589546319	D:/for work/temp/workshorp/PC/Qt/Scientific_computing/build/Desktop_Qt_6_9_2_MinGW_64_bit-Debug/Scientific_computing_autogen/timestamp	ffd760377b665ea8
+572	890	7890481589546319	D:/for work/temp/workshorp/PC/Qt/Scientific_computing/build/Desktop_Qt_6_9_2_MinGW_64_bit-Debug/Scientific_computing_autogen/mocs_compilation.cpp	ffd760377b665ea8
+891	9972	7890481592750987	CMakeFiles/Scientific_computing.dir/mainwindow.cpp.obj	a634420c13d70fc7
+9973	10451	7890481683565283	Scientific_computing.exe	ff532b7768bdf4f

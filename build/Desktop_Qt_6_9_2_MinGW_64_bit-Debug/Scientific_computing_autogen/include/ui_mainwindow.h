@@ -12,15 +12,16 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QComboBox>
-#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTableWidget>
 #include <QtWidgets/QTextEdit>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -34,18 +35,21 @@ public:
     QLabel *label;
     QTableWidget *matrixTable;
     QWidget *widget;
-    QHBoxLayout *horizontalLayout;
-    QTextEdit *Input_textEdit;
-    QComboBox *Input_comboBox;
-    QLabel *label_2;
-    QTextEdit *output_textEdit;
-    QComboBox *output_comboBox;
-    QWidget *widget1;
-    QHBoxLayout *horizontalLayout_2;
+    QVBoxLayout *verticalLayout;
     QLabel *label_3;
+    QPlainTextEdit *plainTextEdit;
+    QWidget *widget1;
+    QVBoxLayout *verticalLayout_2;
     QLabel *label_4;
+    QTextEdit *Input_textEdit;
+    QWidget *widget2;
+    QVBoxLayout *verticalLayout_3;
     QLabel *label_5;
+    QPlainTextEdit *plainTextEdit_2;
+    QWidget *widget3;
+    QVBoxLayout *verticalLayout_4;
     QLabel *label_6;
+    QComboBox *output_comboBox;
     QWidget *tab_2;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -76,60 +80,67 @@ public:
         matrixTable->setColumnCount(9);
         widget = new QWidget(tab);
         widget->setObjectName("widget");
-        widget->setGeometry(QRect(60, 130, 315, 21));
-        horizontalLayout = new QHBoxLayout(widget);
-        horizontalLayout->setObjectName("horizontalLayout");
-        horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        Input_textEdit = new QTextEdit(widget);
-        Input_textEdit->setObjectName("Input_textEdit");
+        widget->setGeometry(QRect(60, 80, 71, 41));
+        verticalLayout = new QVBoxLayout(widget);
+        verticalLayout->setObjectName("verticalLayout");
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
+        label_3 = new QLabel(widget);
+        label_3->setObjectName("label_3");
 
-        horizontalLayout->addWidget(Input_textEdit);
+        verticalLayout->addWidget(label_3);
 
-        Input_comboBox = new QComboBox(widget);
-        Input_comboBox->setObjectName("Input_comboBox");
+        plainTextEdit = new QPlainTextEdit(widget);
+        plainTextEdit->setObjectName("plainTextEdit");
 
-        horizontalLayout->addWidget(Input_comboBox);
-
-        label_2 = new QLabel(widget);
-        label_2->setObjectName("label_2");
-
-        horizontalLayout->addWidget(label_2);
-
-        output_textEdit = new QTextEdit(widget);
-        output_textEdit->setObjectName("output_textEdit");
-
-        horizontalLayout->addWidget(output_textEdit);
-
-        output_comboBox = new QComboBox(widget);
-        output_comboBox->setObjectName("output_comboBox");
-
-        horizontalLayout->addWidget(output_comboBox);
+        verticalLayout->addWidget(plainTextEdit);
 
         widget1 = new QWidget(tab);
         widget1->setObjectName("widget1");
-        widget1->setGeometry(QRect(60, 110, 331, 17));
-        horizontalLayout_2 = new QHBoxLayout(widget1);
-        horizontalLayout_2->setObjectName("horizontalLayout_2");
-        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
-        label_3 = new QLabel(widget1);
-        label_3->setObjectName("label_3");
-
-        horizontalLayout_2->addWidget(label_3);
-
+        widget1->setGeometry(QRect(130, 80, 71, 41));
+        verticalLayout_2 = new QVBoxLayout(widget1);
+        verticalLayout_2->setObjectName("verticalLayout_2");
+        verticalLayout_2->setContentsMargins(0, 0, 0, 0);
         label_4 = new QLabel(widget1);
         label_4->setObjectName("label_4");
 
-        horizontalLayout_2->addWidget(label_4);
+        verticalLayout_2->addWidget(label_4);
 
-        label_5 = new QLabel(widget1);
+        Input_textEdit = new QTextEdit(widget1);
+        Input_textEdit->setObjectName("Input_textEdit");
+
+        verticalLayout_2->addWidget(Input_textEdit);
+
+        widget2 = new QWidget(tab);
+        widget2->setObjectName("widget2");
+        widget2->setGeometry(QRect(230, 80, 73, 41));
+        verticalLayout_3 = new QVBoxLayout(widget2);
+        verticalLayout_3->setObjectName("verticalLayout_3");
+        verticalLayout_3->setContentsMargins(0, 0, 0, 0);
+        label_5 = new QLabel(widget2);
         label_5->setObjectName("label_5");
 
-        horizontalLayout_2->addWidget(label_5);
+        verticalLayout_3->addWidget(label_5);
 
-        label_6 = new QLabel(widget1);
+        plainTextEdit_2 = new QPlainTextEdit(widget2);
+        plainTextEdit_2->setObjectName("plainTextEdit_2");
+
+        verticalLayout_3->addWidget(plainTextEdit_2);
+
+        widget3 = new QWidget(tab);
+        widget3->setObjectName("widget3");
+        widget3->setGeometry(QRect(300, 80, 71, 41));
+        verticalLayout_4 = new QVBoxLayout(widget3);
+        verticalLayout_4->setObjectName("verticalLayout_4");
+        verticalLayout_4->setContentsMargins(0, 0, 0, 0);
+        label_6 = new QLabel(widget3);
         label_6->setObjectName("label_6");
 
-        horizontalLayout_2->addWidget(label_6);
+        verticalLayout_4->addWidget(label_6);
+
+        output_comboBox = new QComboBox(widget3);
+        output_comboBox->setObjectName("output_comboBox");
+
+        verticalLayout_4->addWidget(output_comboBox);
 
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
@@ -153,7 +164,6 @@ public:
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", " \345\226\256\344\275\215\346\217\233\347\256\227\347\237\251\351\231\243 ", nullptr));
-        label_2->setText(QCoreApplication::translate("MainWindow", "=", nullptr));
         label_3->setText(QCoreApplication::translate("MainWindow", "\346\225\270\345\200\274", nullptr));
         label_4->setText(QCoreApplication::translate("MainWindow", "\346\257\224\345\200\274", nullptr));
         label_5->setText(QCoreApplication::translate("MainWindow", "\346\225\270\345\200\274", nullptr));
