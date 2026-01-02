@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>993</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>981</width>
+      <height>531</height>
+     </rect>
+    </property>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>Tab 1</string>
+     </attribute>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>170</y>
+        <width>81</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string> 單位換算矩陣 </string>
+      </property>
+     </widget>
+     <widget class="QTableWidget" name="matrixTable">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>190</y>
+        <width>1071</width>
+        <height>331</height>
+       </rect>
+      </property>
+      <property name="rowCount">
+       <number>9</number>
+      </property>
+      <property name="columnCount">
+       <number>9</number>
+      </property>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+     </widget>
+     <widget class="QWidget" name="">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>80</y>
+        <width>71</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>數值</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPlainTextEdit" name="plainTextEdit"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>80</y>
+        <width>71</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>比值</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTextEdit" name="Input_textEdit"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>80</y>
+        <width>73</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>數值</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPlainTextEdit" name="plainTextEdit_2"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>80</y>
+        <width>71</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>比值</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="output_comboBox"/>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>Tab 2</string>
+     </attribute>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>993</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
