@@ -20,7 +20,7 @@
       <x>0</x>
       <y>0</y>
       <width>981</width>
-      <height>531</height>
+      <height>551</height>
      </rect>
     </property>
     <widget class="QWidget" name="tab">
@@ -32,7 +32,7 @@
        <rect>
         <x>50</x>
         <y>170</y>
-        <width>81</width>
+        <width>101</width>
         <height>16</height>
        </rect>
       </property>
@@ -74,64 +74,77 @@
       <column/>
       <column/>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>60</x>
+        <x>70</x>
         <y>80</y>
-        <width>71</width>
-        <height>41</height>
+        <width>101</width>
+        <height>53</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
+      <layout class="QVBoxLayout" name="input_Layout">
        <item>
         <widget class="QLabel" name="label_3">
          <property name="text">
           <string>數值</string>
          </property>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignCenter</set>
+         </property>
         </widget>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="plainTextEdit"/>
+        <widget class="QLineEdit" name="Input_lineEdit"/>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>230</x>
+        <x>340</x>
         <y>80</y>
-        <width>73</width>
-        <height>41</height>
+        <width>101</width>
+        <height>53</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <layout class="QVBoxLayout" name="output_Layout">
        <item>
         <widget class="QLabel" name="label_5">
          <property name="text">
           <string>數值</string>
          </property>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignCenter</set>
+         </property>
         </widget>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="plainTextEdit_2"/>
+        <widget class="QLineEdit" name="Outputput_lineEdit">
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>300</x>
+        <x>440</x>
         <y>80</y>
-        <width>71</width>
-        <height>41</height>
+        <width>101</width>
+        <height>53</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_4">
+      <layout class="QVBoxLayout" name="output_Note_Layout">
        <item>
         <widget class="QLabel" name="label_6">
          <property name="text">
-          <string>比值</string>
+          <string>記號</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignCenter</set>
          </property>
         </widget>
        </item>
@@ -140,27 +153,56 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>140</x>
+        <x>170</x>
         <y>80</y>
-        <width>71</width>
-        <height>44</height>
+        <width>101</width>
+        <height>53</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <layout class="QVBoxLayout" name="Input_Note_Layout">
        <item>
         <widget class="QLabel" name="label_4">
          <property name="text">
-          <string>比值</string>
+          <string>記號</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignCenter</set>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="output_comboBox_2"/>
+        <widget class="QComboBox" name="Input_comboBox"/>
        </item>
       </layout>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>50</y>
+        <width>63</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>輸入</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_7">
+      <property name="geometry">
+       <rect>
+        <x>410</x>
+        <y>50</y>
+        <width>63</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>輸出</string>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
@@ -176,7 +218,7 @@
      <x>0</x>
      <y>0</y>
      <width>993</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

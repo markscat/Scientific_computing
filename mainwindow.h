@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "UnitConverterHandler.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -19,5 +21,9 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    void updateResult();
+    UnitConverterHandler *handler; // <--- 在這裡宣告它！
+
+
 };
 #endif // MAINWINDOW_H

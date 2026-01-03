@@ -1,0 +1,21 @@
+#ifndef UNITCONVERTERHANDLER_H
+#define UNITCONVERTERHANDLER_H
+
+#include <QTableWidget>
+#include <QStringList>
+#include <vector>
+
+class UnitConverterHandler {
+public:
+    // 定義範圍：pico (-12) 到 Mega (6)
+    const QStringList units = {"p (10⁻¹²)", "n (10⁻⁹)", "u (10⁻⁶)", "m (10⁻³)", "1 (Base)", "K (10³)", "M (10⁶)"};
+    const std::vector<int> exponents = {-12, -9, -6, -3, 0, 3, 6};
+
+    // 專門負責填寫表格的函數
+    void setupMatrixTable(QTableWidget* table);
+    
+    // 專門負責計算結果的函數
+    double convert(double value, int sourceIdx, int targetIdx);
+};
+
+#endif
