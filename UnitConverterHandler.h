@@ -16,6 +16,16 @@ public:
 
     // 專門負責計算結果的函數
     double convert(double value, int sourceIdx, int targetIdx);
+
+
+    // 在 public 加入：
+    // 解析 SMD 代碼 (如 "103")，回傳基準單位數值 (電阻為 Ohm, 電容為 pF)
+    double decodeSMDCode(QString code);
+
+    // 專為 Tab 2 設計的單位清單
+    const QStringList resistorUnits = {"Ω", "kΩ", "MΩ"};
+    const QStringList capacitorUnits = {"pF", "nF", "μF"};
+
 };
 
 #endif

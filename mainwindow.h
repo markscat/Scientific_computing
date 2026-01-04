@@ -24,6 +24,9 @@ private:
     void updateResult();
     UnitConverterHandler *handler; // <--- 在這裡宣告它！
 
+    void updateSMDCapacitor();
+    void updateSMDResistor();
+
 
 };
 #endif // MAINWINDOW_H

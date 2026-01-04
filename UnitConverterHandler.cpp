@@ -86,3 +86,36 @@ double UnitConverterHandler::convert(double value, int sourceIdx, int targetIdx)
     double ratio = std::pow(10, exponents[sourceIdx] - exponents[targetIdx]);
     return value * ratio;
 }
+
+
+
+double UnitConverterHandler::decodeSMDCode(QString code) {
+    if (code.isEmpty()) return 0;
+
+    // 1. 處理帶有小數點代碼的情況
+    // 電阻常用 R (4R7), 電容常用 p (4p7) 或 n (1n2)
+    if (code.contains('R', Qt::CaseInsensitive) ||
+        code.contains('P', Qt::CaseInsensitive) ||
+        code.contains('N', Qt::CaseInsensitive)) {
+
+        QString temp = code;
+        temp.replace('R', '.', Qt::CaseInsensitive);
+        temp.replace('P', '.', Qt::CaseInsensitive);
+        temp.replace('N', '.', Qt::CaseInsensitive);
+        return temp.toDouble();
+    }
+
+    // 2. 處理標準三位數代碼 (如 103)
+    if (code.length() >= 3) {
+        // 使用 last(1) 取代 right(1)，避免 Clazy 警告
+        int exponent = code.last(1).toInt();
+
+        // 使用 chopped(1) 取得除了最後一碼以外的部分，取代 left()，效能更好
+        double prefix = code.chopped(1).toDouble();
+
+        // 核心演算法：前兩位 * 10的(第三位)次方
+        return prefix * std::pow(10, exponent);
+    }
+
+    return code.toDouble(); // 如果是兩位數，直接視為數值
+}
