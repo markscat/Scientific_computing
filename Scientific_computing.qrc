@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Voltage_divider.bmp</file>
+        <file>Voltage_divider-f.bmp</file>
+    </qresource>
+</RCC>

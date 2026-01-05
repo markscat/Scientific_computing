@@ -19,14 +19,20 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+public slots:
+    void updateVoltageDivider();
+    void onVoltageModeChanged();
+
+
 private:
     Ui::MainWindow *ui;
     void updateResult();
     UnitConverterHandler *handler; // <--- 在這裡宣告它！
 
+    bool isCalculating = false;
+
     void updateSMDCapacitor();
     void updateSMDResistor();
-
 
 };
 #endif // MAINWINDOW_H
