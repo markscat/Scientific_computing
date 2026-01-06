@@ -5,6 +5,14 @@
 #include <QStringList>
 #include <vector>
 
+
+// 定義一個簡單的結構來回傳計算結果
+struct LEDResult {
+    double resistance;
+    double wattage;
+    bool isVoltageOk;
+};
+
 class UnitConverterHandler {
 public:
     // 定義範圍：pico (-12) 到 Mega (6)
@@ -25,6 +33,15 @@ public:
     // 專為 Tab 2 設計的單位清單
     const QStringList resistorUnits = {"Ω", "kΩ", "MΩ"};
     const QStringList capacitorUnits = {"pF", "nF", "μF"};
+
+    // 新增：電流單位清單宣告
+    const QStringList currentUnits = {"A", "mA", "uA"};
+
+    // 新增：LED 計算邏輯宣告
+    double calculateLEDResistor(double vSource, double vLed, double current, int currentUnitIdx);
+    // 新增：處理串並聯的 LED 計算
+    LEDResult calculateLEDComplex(double vcc, double vd, double current, int iUnitIdx, int series, int parallel);
+
 
 };
 

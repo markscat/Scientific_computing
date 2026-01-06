@@ -23,6 +23,9 @@ public slots:
     void updateVoltageDivider();
     void onVoltageModeChanged();
 
+private slots:
+    void updateLEDCalculator(); // 負責第四頁的計算連動
+
 
 private:
     Ui::MainWindow *ui;
