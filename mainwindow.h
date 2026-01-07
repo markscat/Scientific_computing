@@ -19,12 +19,6 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-public slots:
-    void updateVoltageDivider();
-    void onVoltageModeChanged();
-
-private slots:
-    void updateLEDCalculator(); // 負責第四頁的計算連動
 
 
 private:
@@ -34,8 +28,6 @@ private:
 
     bool isCalculating = false;
 
-    void updateSMDCapacitor();
-    void updateSMDResistor();
 
 };
 #endif // MAINWINDOW_H

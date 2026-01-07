@@ -1,6 +1,10 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include "UnitConverterHandler.h"
+#include "ledcurrentlimit.h" // 1. 引入新模組的標頭檔
+#include "Voltage_Divider.h"
+
+#include <QVBoxLayout>        // 2. 引入佈局管理器
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -19,7 +23,6 @@ MainWindow::MainWindow(QWidget *parent)
     handler->setupMatrixTable(ui->matrixTable);
 
     // 2. 填寫下拉選單 (ComboBox)
-
     ui->Input_comboBox->addItems(handler->units);
     ui->output_comboBox->addItems(handler->units);
 
@@ -31,6 +34,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->Input_lineEdit, &QLineEdit::textChanged, this, &MainWindow::updateResult);
     connect(ui->Input_comboBox, &QComboBox::currentIndexChanged, this, &MainWindow::updateResult);
     connect(ui->output_comboBox, &QComboBox::currentIndexChanged, this, &MainWindow::updateResult);
+
+
+
     // --- Tab 2 初始化 ---
     // 填寫電阻單位
     ui->Resistor_output_comboBox_2->addItems(handler->resistorUnits);
@@ -45,54 +51,38 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->capacitor_Input_lineEdit, &QLineEdit::textChanged, this, &MainWindow::updateSMDCapacitor);
     connect(ui->capacitor_output_comboBox, &QComboBox::currentIndexChanged, this, &MainWindow::updateSMDCapacitor);
 
-    // --- Tab 3 初始化 ---
-    ui->R1_input_comboBox->addItems(handler->resistorUnits);
-    ui->R2_input_comboBox->addItems(handler->resistorUnits);
-
-    // 補上模式選項 (如果 UI Designer 裡沒填的話，要在這裡填)
-    if(ui->calcMode_comboBox->count() == 0) {
-        ui->calcMode_comboBox->addItems({"求輸出電壓 (Vo)", "求輸入電壓 (Vi)", "求上拉電阻 (R1)", "求下拉電阻 (R2)"});
-    }
-
-    // 連結訊號：所有輸入框改變時都要計算
-    connect(ui->R1_Input_lineEdit, &QLineEdit::textChanged, this, &MainWindow::updateVoltageDivider);
-    connect(ui->R1_input_comboBox, &QComboBox::currentIndexChanged, this, &MainWindow::updateVoltageDivider);
-    connect(ui->R2_Input_lineEdit, &QLineEdit::textChanged, this, &MainWindow::updateVoltageDivider);
-    connect(ui->R2_input_comboBox, &QComboBox::currentIndexChanged, this, &MainWindow::updateVoltageDivider);
-    connect(ui->VI_Input_lineEdit, &QLineEdit::textChanged, this, &MainWindow::updateVoltageDivider);
-    connect(ui->Vo_Input_lineEdit, &QLineEdit::textChanged, this, &MainWindow::updateVoltageDivider);
 
 
-    // 【新增】補上 Vo 的連動，這樣反算 R1, R2, Vi 時才會觸發
-    connect(ui->Vo_Input_lineEdit, &QLineEdit::textChanged, this, &MainWindow::updateVoltageDivider);
+    // --- Tab 3 (電阻分壓)---
 
-    // 連結模式切換訊號
-    connect(ui->calcMode_comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onVoltageModeChanged()));
-    connect(ui->calcMode_comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateVoltageDivider()));
+    // 建立一個垂直佈局，放在 MainWindow UI 的 tab_3 裡面
+    QVBoxLayout *VDpagelayout = new QVBoxLayout(ui->tab_3);
 
-    // 【新增】程式啟動時先執行一次，確保 UI 鎖定狀態正確
-    onVoltageModeChanged();
+    // 建立你的模組實例，並把 handler 傳進去
+    Voltage_Divider *VDpage = new Voltage_Divider(handler, this);
+
+    // 把這個模組加進佈局中
+    VDpagelayout->addWidget(VDpage);
+
+    // 設定佈局邊距（設為 0 會比較緊湊，看起來像原生分頁）
+    VDpagelayout->setContentsMargins(0, 0, 0, 0);
+
     //--- Tab 3 End ---
 
-    // --- Tab 4 初始化 (LED 限流電阻) ---
-    ui->D1_input_comboBox->addItems(handler->currentUnits);
-    ui->limit_Input_comboBox->addItems(handler->resistorUnits);
+    // --- Tab 4 (LED 限流電阻) ---
 
-    // 預設設定
-    ui->D1_input_comboBox->setCurrentIndex(1);   // 預設 mA
-    ui->limit_Input_comboBox->setCurrentIndex(0); // 預設 Ω
-    ui->VD_Input_lineEdit->setText("2.0");        // 給一個常見的預設值
+    // 建立一個垂直佈局，放在 MainWindow UI 的 tab_4 裡面
+    QVBoxLayout *LEDlayout = new QVBoxLayout(ui->tab_4);
 
-    // 連結所有會影響結果的訊號
-    connect(ui->D1_Input_lineEdit_2, &QLineEdit::textChanged, this, &MainWindow::updateLEDCalculator);
-    connect(ui->D1_input_comboBox, &QComboBox::currentIndexChanged, this, &MainWindow::updateLEDCalculator);
-    connect(ui->VCCIO_Input_lineEdit, &QLineEdit::textChanged, this, &MainWindow::updateLEDCalculator);
-    connect(ui->VD_Input_lineEdit, &QLineEdit::textChanged, this, &MainWindow::updateLEDCalculator);
-    connect(ui->limit_Input_comboBox, &QComboBox::currentIndexChanged, this, &MainWindow::updateLEDCalculator);
+    // 4. 建立你的 LED 模組實例，並把 handler 傳進去
+    LED_current_limit *ledPage = new LED_current_limit(handler, this);
 
-     connect(ui->Series_Input_lineEdit, &QLineEdit::textChanged, this, &MainWindow::updateLEDCalculator);
-     connect(ui->Parallel_Input_lineEdit, &QLineEdit::textChanged, this, &MainWindow::updateLEDCalculator);
+    // 5. 把這個模組加進佈局中
+    LEDlayout->addWidget(ledPage);
 
+    // 6. 設定佈局邊距（設為 0 會比較緊湊，看起來像原生分頁）
+    LEDlayout->setContentsMargins(0, 0, 0, 0);
+    //--- Tab 4 End ---
 
 }
 
@@ -104,8 +94,6 @@ MainWindow::~MainWindow()
 void MainWindow::updateResult() {
     // 防呆檢查：如果 handler 沒建立好，先不要計算
     if (!handler) return;
-
-
 
     bool ok;
     // 取得輸入的數值
@@ -152,173 +140,4 @@ void MainWindow::updateSMDCapacitor() {
     else if (unitIdx == 2) finalVal = baseValue / 1000000.0; // μF
 
     ui->capacitor_output_lineEdit->setText(QString::number(finalVal, 'g', 6));
-}
-
-void MainWindow::onVoltageModeChanged() {
-
-    int mode = ui->calcMode_comboBox->currentIndex();
-
-    // 先初始化所有框為「可編輯」與「白色背景」
-    QLineEdit* edits[] = { ui->VI_Input_lineEdit, ui->Vo_Input_lineEdit,
-                          ui->R1_Input_lineEdit, ui->R2_Input_lineEdit };
-    for(auto e : edits) {
-        e->setReadOnly(false);
-        e->setStyleSheet("background-color: white;");
-    }
-
-    QString resStyle = "background-color: #eeeeee; color: blue; font-weight: bold;";
-
-    // 使用 switch 處理四種模式的 UI 鎖定
-    switch (mode) {
-    case 0: // 求 Vo
-        ui->Vo_Input_lineEdit->setReadOnly(true);
-        ui->Vo_Input_lineEdit->setStyleSheet(resStyle);
-        break;
-    case 1: // 求 Vi
-        ui->VI_Input_lineEdit->setReadOnly(true);
-        ui->VI_Input_lineEdit->setStyleSheet(resStyle);
-        break;
-    case 2: // 求 R1
-        ui->R1_Input_lineEdit->setReadOnly(true);
-        ui->R1_Input_lineEdit->setStyleSheet(resStyle);
-        break;
-    case 3: // 求 R2
-        ui->R2_Input_lineEdit->setReadOnly(true);
-        ui->R2_Input_lineEdit->setStyleSheet(resStyle);
-        break;
-    default:
-        break;
-    }
-}
-
-void MainWindow::updateVoltageDivider() {
-
-    if (isCalculating) return; // 如果正在計算中，就跳出，防止無窮迴圈
-    isCalculating = true;
-
-    int mode = ui->calcMode_comboBox->currentIndex();
-    bool okVi, okVo, okR1, okR2;
-
-    // 取得所有數值
-    double Vi = ui->VI_Input_lineEdit->text().toDouble(&okVi);
-    double Vo = ui->Vo_Input_lineEdit->text().toDouble(&okVo);
-    double R1_val = ui->R1_Input_lineEdit->text().toDouble(&okR1);
-    double R2_val = ui->R2_Input_lineEdit->text().toDouble(&okR2);
-
-    // 換算電阻基準值 (Ohm)
-    double R1_ohm = R1_val * std::pow(10, (ui->R1_input_comboBox->currentIndex() * 3));
-    double R2_ohm = R2_val * std::pow(10, (ui->R2_input_comboBox->currentIndex() * 3));
-
-    switch (mode) {
-    case 0: // 求 Vo = Vi * (R2 / (R1 + R2))
-        if (okVi && okR1 && okR2 && (R1_ohm + R2_ohm) != 0) {
-            double res = Vi * (R2_ohm / (R1_ohm + R2_ohm));
-            ui->Vo_Input_lineEdit->setText(QString::number(res, 'g', 6));
-        }
-        break;
-
-    case 1: // 求 Vi = Vo * (R1 + R2) / R2
-        if (okVo && okR1 && okR2 && R2_ohm != 0) {
-            double res = Vo * (R1_ohm + R2_ohm) / R2_ohm;
-            ui->VI_Input_lineEdit->setText(QString::number(res, 'g', 6));
-        }
-        break;
-
-    case 2: // 求 R1 = R2 * (Vi - Vo) / Vo
-        if (okVi && okVo && okR2 && Vo != 0) {
-            double res_ohm = R2_ohm * (Vi - Vo) / Vo;
-            double display = res_ohm / std::pow(10, (ui->R1_input_comboBox->currentIndex() * 3));
-            ui->R1_Input_lineEdit->setText(QString::number(display, 'g', 6));
-        }
-        break;
-
-    case 3: // 求 R2 = R1 * Vo / (Vi - Vo)
-        if (okVi && okVo && okR1 && (Vi - Vo) != 0) {
-            double res_ohm = R1_ohm * Vo / (Vi - Vo);
-            double display = res_ohm / std::pow(10, (ui->R2_input_comboBox->currentIndex() * 3));
-            ui->R2_Input_lineEdit->setText(QString::number(display, 'g', 6));
-        }
-        break;
-
-    default:
-        break;
-    }
-
-    isCalculating = false; // 計算結束，解鎖
-}
-
-void MainWindow::updateLEDCalculator() {
-    if (!handler) return;
-
-    bool okVcc, okVd, okI,okS, okP;
-    double vcc = ui->VCCIO_Input_lineEdit->text().toDouble(&okVcc);
-    double vd = ui->VD_Input_lineEdit->text().toDouble(&okVd);
-    double current = ui->D1_Input_lineEdit_2->text().toDouble(&okI);
-
-    // 讀取串並聯數量，如果沒填或填錯，預設為 1
-    int series = ui->Series_Input_lineEdit->text().toInt(&okS);
-    if (!okS || series < 1) series = 1;
-
-    int parallel = ui->Parallel_Input_lineEdit->text().toInt(&okP);
-    if (!okP || parallel < 1) parallel = 1;
-
-
-    if (okVcc && okVd && okI) {
-        // 1. 取得電流單位索引
-        int iUnitIdx = ui->D1_input_comboBox->currentIndex();
-
-        // 2. 呼叫邏輯層計算基準電阻 (Ohm)
-
-        LEDResult result = handler->calculateLEDComplex(vcc, vd, current, iUnitIdx, series, parallel);
-
-        if (!result.isVoltageOk) {
-            ui->limit_Input_lineEdit->setText("Vcc < 總Vd!");
-            ui->W_Input_lineEdit->setText("N/A");
-            return;
-        }
-
-        // 顯示電阻結果
-        int rUnitIdx = ui->limit_Input_comboBox->currentIndex();
-        double displayR = result.resistance;
-        if (rUnitIdx == 1) displayR /= 1000.0;
-        else if (rUnitIdx == 2) displayR /= 1000000.0;
-
-        ui->limit_Input_lineEdit->setText(QString::number(displayR, 'g', 6));
-
-        // 顯示功耗結果 (W)
-        ui->W_Input_lineEdit->setText(QString::number(result.wattage, 'g', 4));
-
-        // 額外小功能：如果功耗太大，把字變紅色 (示範 Qt 樣式切換)
-        if (result.wattage > 0.25) {
-            ui->W_Input_lineEdit->setStyleSheet("color: red; font-weight: bold;");
-        } else {
-            ui->W_Input_lineEdit->setStyleSheet("color: black;");
-        }
-    } else {
-        ui->limit_Input_lineEdit->clear();
-        ui->W_Input_lineEdit->clear();
-    }
-
-        /*
-        //double resBase = handler->calculateLEDResistor(vcc, vd, current, iUnitIdx);
-        if (resBase == -1) {
-            ui->limit_Input_lineEdit->setText("Vcc < Vd!");
-            return;
-        }
-
-        // 3. 根據選定的電阻單位換算顯示值
-        int rUnitIdx = ui->limit_Input_comboBox->currentIndex();
-        double displayVal = resBase;
-
-        if (rUnitIdx == 1) displayVal = resBase / 1000.0;       // kΩ
-        else if (rUnitIdx == 2) displayVal = resBase / 1000000.0; // MΩ
-
-        ui->limit_Input_lineEdit->setText(QString::number(displayVal, 'g', 6));
-    } else {
-        ui->limit_Input_lineEdit->clear();
-    }
-*/
-
-
-
 }
