@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -215,6 +215,11 @@
     <widget class="QWidget" name="tab_4">
      <attribute name="title">
       <string>LED 限流電阻計算</string>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="tab_5">
+     <attribute name="title">
+      <string>頁面</string>
      </attribute>
     </widget>
    </widget>

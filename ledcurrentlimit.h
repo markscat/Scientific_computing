@@ -23,6 +23,12 @@ private:
     UnitConverterHandler *handler; // 保存傳進來的 handler
     void updateLEDCalculator();
 
+
+    // 新增：LED 計算邏輯宣告
+    double calculateLEDResistor(double vSource, double vLed, double current, int currentUnitIdx);
+
+    // 新增：處理串並聯的 LED 計算
+    LEDResult calculateLEDComplex(double vcc, double vd, double current, int iUnitIdx, int series, int parallel);
 };
 
 #endif // LEDCURRENTLIMIT_H

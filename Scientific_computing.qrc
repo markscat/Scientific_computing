@@ -3,5 +3,6 @@
         <file>Voltage_divider.bmp</file>
         <file>Voltage_divider-f.bmp</file>
         <file>LED.bmp</file>
+        <file>Line_With.bmp</file>
     </qresource>
 </RCC>

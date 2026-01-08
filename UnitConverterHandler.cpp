@@ -57,21 +57,6 @@ void UnitConverterHandler::setupMatrixTable(QTableWidget* table) {
             if (r == c) item->setBackground(QBrush(Qt::lightGray));
             table->setItem(r, c, item);
 
-/*
-            // 格式化數字顯示
-            QString display;
-
-            if (ratio >= 1e6 || ratio <= 1e-4) {
-                display = QString::number(ratio, 'e', 2); // 太大或太小用科學記號
-            } else {
-                display = QString::number(ratio, 'f', 4).remove(QRegularExpression("0+$")).remove(QRegularExpression("\\.$"));
-
-            }
-
-            QTableWidgetItem* item = new QTableWidgetItem(display);
-            item->setTextAlignment(Qt::AlignCenter);
-            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled); // 設為唯讀
-*/
             // 3. 對角線背景變色
             if (r == c) {
                 item->setBackground(QBrush(Qt::lightGray));
@@ -87,7 +72,7 @@ double UnitConverterHandler::convert(double value, int sourceIdx, int targetIdx)
     return value * ratio;
 }
 
-
+/*
 
 double UnitConverterHandler::decodeSMDCode(QString code) {
     if (code.isEmpty()) return 0;
@@ -164,3 +149,4 @@ LEDResult UnitConverterHandler::calculateLEDComplex(double vcc, double vd, doubl
 
     return res;
 }
+*/

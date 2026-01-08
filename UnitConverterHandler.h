@@ -28,7 +28,7 @@ public:
 
     // 在 public 加入：
     // 解析 SMD 代碼 (如 "103")，回傳基準單位數值 (電阻為 Ohm, 電容為 pF)
-    double decodeSMDCode(QString code);
+    //double decodeSMDCode(QString code);
 
     // 專為 Tab 2 設計的單位清單
     const QStringList resistorUnits = {"Ω", "kΩ", "MΩ"};
@@ -37,11 +37,14 @@ public:
     // 新增：電流單位清單宣告
     const QStringList currentUnits = {"A", "mA", "uA"};
 
+    /*
+
     // 新增：LED 計算邏輯宣告
     double calculateLEDResistor(double vSource, double vLed, double current, int currentUnitIdx);
+
     // 新增：處理串並聯的 LED 計算
     LEDResult calculateLEDComplex(double vcc, double vd, double current, int iUnitIdx, int series, int parallel);
-
+*/
 
 };
 

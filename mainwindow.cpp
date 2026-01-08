@@ -1,11 +1,11 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include "UnitConverterHandler.h"
-#include "ledcurrentlimit.h" // 1. 引入新模組的標頭檔
+#include "ledcurrentlimit.h"
 #include "Voltage_Divider.h"
+#include "ResCap_Conversion.h"
 
-#include <QVBoxLayout>        // 2. 引入佈局管理器
-
+#include <QVBoxLayout>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -38,20 +38,19 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     // --- Tab 2 初始化 ---
+
     // 填寫電阻單位
-    ui->Resistor_output_comboBox_2->addItems(handler->resistorUnits);
-    // 填寫電容單位
-    ui->capacitor_output_comboBox->addItems(handler->capacitorUnits);
+    // 建立一個垂直佈局，放在 MainWindow UI 的 tab_3 裡面
+    QVBoxLayout *RClayout = new QVBoxLayout(ui->tab_2);
 
-      // 連結電阻計算
-    connect(ui->Resistor_Input_lineEdit, &QLineEdit::textChanged, this, &MainWindow::updateSMDResistor);
-    connect(ui->Resistor_output_comboBox_2, &QComboBox::currentIndexChanged, this, &MainWindow::updateSMDResistor);
+    // 建立你的模組實例，並把 handler 傳進去
+    ResCap_Conversion *RCpage = new ResCap_Conversion(handler, this);
 
-    // 連結電容計算
-    connect(ui->capacitor_Input_lineEdit, &QLineEdit::textChanged, this, &MainWindow::updateSMDCapacitor);
-    connect(ui->capacitor_output_comboBox, &QComboBox::currentIndexChanged, this, &MainWindow::updateSMDCapacitor);
+    // 把這個模組加進佈局中
+    RClayout->addWidget(RCpage);
 
-
+    // 設定佈局邊距（設為 0 會比較緊湊，看起來像原生分頁）
+    RClayout->setContentsMargins(0, 0, 0, 0);
 
     // --- Tab 3 (電阻分壓)---
 
@@ -113,31 +112,4 @@ void MainWindow::updateResult() {
 
     // 顯示結果 (使用 'g' 格式，自動處理 0 且避免太長)
     ui->Outputput_lineEdit->setText(QString::number(result, 'g', 10));
-}
-
-void MainWindow::updateSMDResistor() {
-    QString code = ui->Resistor_Input_lineEdit->text();
-    double baseValue = handler->decodeSMDCode(code); // 算出是多少 Ohm
-
-    int unitIdx = ui->Resistor_output_comboBox_2->currentIndex();
-    double finalVal = baseValue;
-
-    if (unitIdx == 1) finalVal = baseValue / 1000.0;       // kΩ
-    else if (unitIdx == 2) finalVal = baseValue / 1000000.0; // MΩ
-
-    ui->Resistor_output_lineEdit->setText(QString::number(finalVal, 'g', 6));
-}
-
-
-void MainWindow::updateSMDCapacitor() {
-    QString code = ui->capacitor_Input_lineEdit->text();
-    double baseValue = handler->decodeSMDCode(code); // 算出是多少 pF
-
-    int unitIdx = ui->capacitor_output_comboBox->currentIndex();
-    double finalVal = baseValue;
-
-    if (unitIdx == 1) finalVal = baseValue / 1000.0;       // nF
-    else if (unitIdx == 2) finalVal = baseValue / 1000000.0; // μF
-
-    ui->capacitor_output_lineEdit->setText(QString::number(finalVal, 'g', 6));
 }

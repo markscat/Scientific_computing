@@ -216,7 +216,7 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QComboBox" name="Resistor_output_comboBox_2"/>
+      <widget class="QComboBox" name="Resistor_output_comboBox"/>
      </item>
     </layout>
    </widget>

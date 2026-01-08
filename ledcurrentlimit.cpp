@@ -65,7 +65,7 @@ void LED_current_limit::updateLEDCalculator() {
 
         // 2. 呼叫邏輯層計算基準電阻 (Ohm)
 
-        LEDResult result = handler->calculateLEDComplex(vcc, vd, current, iUnitIdx, series, parallel);
+        LEDResult result = calculateLEDComplex(vcc, vd, current, iUnitIdx, series, parallel);
 
         if (!result.isVoltageOk) {
             ui->limit_Input_lineEdit->setText("Vcc < 總Vd!");
@@ -94,27 +94,51 @@ void LED_current_limit::updateLEDCalculator() {
         ui->limit_Input_lineEdit->clear();
         ui->W_Input_lineEdit->clear();
     }
+}
 
-    /*
-        //double resBase = handler->calculateLEDResistor(vcc, vd, current, iUnitIdx);
-        if (resBase == -1) {
-            ui->limit_Input_lineEdit->setText("Vcc < Vd!");
-            return;
-        }
 
-        // 3. 根據選定的電阻單位換算顯示值
-        int rUnitIdx = ui->limit_Input_comboBox->currentIndex();
-        double displayVal = resBase;
+double LED_current_limit::calculateLEDResistor(double vcc, double vd, double current, int currentUnitIdx) {
 
-        if (rUnitIdx == 1) displayVal = resBase / 1000.0;       // kΩ
-        else if (rUnitIdx == 2) displayVal = resBase / 1000000.0; // MΩ
+    if (current <= 0) return 0;
 
-        ui->limit_Input_lineEdit->setText(QString::number(displayVal, 'g', 6));
-    } else {
-        ui->limit_Input_lineEdit->clear();
+    // 1. 將電流換算為標準單位 A (Ampere)
+    double currentA = current;
+    if (currentUnitIdx == 1) currentA = current / 1000.0;      // mA -> A
+    else if (currentUnitIdx == 2) currentA = current / 1000000.0; // uA -> A
+
+    // 2. 檢查壓差是否合理 (Vcc 必須大於 Vd)
+    if (vcc <= vd) return -1; // 回傳 -1 代表電壓不足以驅動 LED
+
+    // 3. 歐姆定律：R = (Vcc - Vd) / I
+    return (vcc - vd) / currentA;
+}
+
+LEDResult LED_current_limit::calculateLEDComplex(double vcc, double vd, double current, int iUnitIdx, int series, int parallel) {
+
+    LEDResult res = {0, 0, true};
+
+    // 1. 處理電流單位換算 (換算為 A)
+    double branchCurrentA = current;
+    if (iUnitIdx == 1) branchCurrentA = current / 1000.0;
+    else if (iUnitIdx == 2) branchCurrentA = current / 1000000.0;
+
+    // 2. 串聯計算：總電壓需求
+    double totalVd = vd * (series > 0 ? series : 1);
+
+    // 3. 並聯計算：總電流需求
+    double totalCurrentA = branchCurrentA * (parallel > 0 ? parallel : 1);
+
+    // 4. 安全檢查：Vcc 必須大於總 LED 壓降
+    if (vcc <= totalVd) {
+        res.isVoltageOk = false;
+        return res;
     }
-*/
 
+    // 5. 計算電阻 R = V / I
+    res.resistance = (vcc - totalVd) / totalCurrentA;
 
+    // 6. 計算功耗 P = V * I (或是 I^2 * R)
+    res.wattage = (vcc - totalVd) * totalCurrentA;
 
+    return res;
 }

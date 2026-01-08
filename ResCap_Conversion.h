@@ -21,10 +21,12 @@ public:
 
 private:
     Ui::ResCap_Conversion *ui;
+
     UnitConverterHandler *handler; // 保存傳進來的 handler
 
     void updateSMDCapacitor();
     void updateSMDResistor();
+    double decodeSMDCode(QString code);
 
 };
 
