@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>993</width>
-    <height>600</height>
+    <height>666</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,10 +17,10 @@
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>10</y>
+      <x>0</x>
+      <y>0</y>
       <width>981</width>
-      <height>551</height>
+      <height>621</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -219,7 +219,7 @@
     </widget>
     <widget class="QWidget" name="tab_5">
      <attribute name="title">
-      <string>頁面</string>
+      <string>走線電流計算</string>
      </attribute>
     </widget>
    </widget>

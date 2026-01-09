@@ -37,14 +37,7 @@ public:
     // 新增：電流單位清單宣告
     const QStringList currentUnits = {"A", "mA", "uA"};
 
-    /*
 
-    // 新增：LED 計算邏輯宣告
-    double calculateLEDResistor(double vSource, double vLed, double current, int currentUnitIdx);
-
-    // 新增：處理串並聯的 LED 計算
-    LEDResult calculateLEDComplex(double vcc, double vd, double current, int iUnitIdx, int series, int parallel);
-*/
 
 };
 

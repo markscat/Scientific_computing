@@ -4,6 +4,7 @@
 #include "ledcurrentlimit.h"
 #include "Voltage_Divider.h"
 #include "ResCap_Conversion.h"
+#include "Line_Width.h"
 
 #include <QVBoxLayout>
 
@@ -40,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent)
     // --- Tab 2 初始化 ---
 
     // 填寫電阻單位
-    // 建立一個垂直佈局，放在 MainWindow UI 的 tab_3 裡面
+    // 建立一個垂直佈局，放在 MainWindow UI 的 tab_2 裡面
     QVBoxLayout *RClayout = new QVBoxLayout(ui->tab_2);
 
     // 建立你的模組實例，並把 handler 傳進去
@@ -83,6 +84,25 @@ MainWindow::MainWindow(QWidget *parent)
     LEDlayout->setContentsMargins(0, 0, 0, 0);
     //--- Tab 4 End ---
 
+
+    // --- Tab 5 (走線電流設計) ---
+
+
+    // 建立一個垂直佈局，放在 MainWindow UI 的 tab_5 裡面
+    QVBoxLayout *LineWidth_layout = new QVBoxLayout(ui->tab_5);
+
+    // 4. 建立你的 LED 模組實例，並把 handler 傳進去
+    Line_Width *LineWidth_Page = new Line_Width(handler, ui->tab_5);
+
+    // 5. 把這個模組加進佈局中
+    LineWidth_layout->addWidget(LineWidth_Page);
+
+    // 6. 設定佈局邊距（設為 0 會比較緊湊，看起來像原生分頁）
+    LineWidth_layout->setContentsMargins(0, 0, 0, 0);
+
+    ui->tab_5->setLayout(LineWidth_layout);
+
+    //--- Tab 5 End ---
 }
 
 MainWindow::~MainWindow()
