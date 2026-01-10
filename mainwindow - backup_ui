@@ -152,7 +152,7 @@
       <property name="alignment">
        <set>Qt::AlignmentFlag::AlignCenter</set>
       </property>
-      <widget class="QWidget" name="layoutWidget1">
+      <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>10</x>

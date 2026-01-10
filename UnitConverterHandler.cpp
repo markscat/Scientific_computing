@@ -53,15 +53,13 @@ void UnitConverterHandler::setupMatrixTable(QTableWidget* table) {
                                   : QString::number(ratio, 'g', 6);
 
             QTableWidgetItem* item = new QTableWidgetItem(display);
+
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-            if (r == c) item->setBackground(QBrush(Qt::lightGray));
-            table->setItem(r, c, item);
 
             // 3. 對角線背景變色
             if (r == c) {
                 item->setBackground(QBrush(Qt::lightGray));
             }
-
             table->setItem(r, c, item);
         }
     }
