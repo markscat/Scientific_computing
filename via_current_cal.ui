@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Line_Width</class>
- <widget class="QWidget" name="Line_Width">
+ <class>Via_Current_cal</class>
+ <widget class="QWidget" name="Via_Current_cal">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>958</width>
-    <height>596</height>
+    <width>846</width>
+    <height>639</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,9 +17,9 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>0</y>
+     <y>90</y>
      <width>221</width>
-     <height>131</height>
+     <height>161</height>
     </rect>
    </property>
    <property name="title">
@@ -92,10 +92,10 @@
   <widget class="QGroupBox" name="groupBox_11">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>130</y>
+     <x>230</x>
+     <y>10</y>
      <width>221</width>
-     <height>211</height>
+     <height>331</height>
     </rect>
    </property>
    <property name="title">
@@ -108,19 +108,19 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>30</y>
+      <y>20</y>
       <width>201</width>
-      <height>175</height>
+      <height>295</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout_13" columnstretch="1,1">
-     <item row="3" column="1">
-      <widget class="QLabel" name="label_24">
+    <layout class="QGridLayout" name="gridLayout_13" columnstretch="0,0">
+     <item row="8" column="0">
+      <widget class="QLabel" name="label_19">
        <property name="frameShape">
         <enum>QFrame::Shape::Box</enum>
        </property>
        <property name="text">
-        <string>攝氏</string>
+        <string>孔壁鍍層厚度</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -129,38 +129,6 @@
      </item>
      <item row="3" column="0">
       <widget class="QLineEdit" name="temp_lineEdit"/>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_21">
-       <property name="frameShape">
-        <enum>QFrame::Shape::Box</enum>
-       </property>
-       <property name="text">
-        <string>電流</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignmentFlag::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_15">
-       <property name="frameShape">
-        <enum>QFrame::Shape::Box</enum>
-       </property>
-       <property name="text">
-        <string>走線長度</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignmentFlag::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLineEdit" name="Current_lineEdit"/>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLineEdit" name="Length_lineEdit"/>
      </item>
      <item row="4" column="1">
       <widget class="QLabel" name="label_16">
@@ -175,19 +143,26 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="1">
-      <widget class="QComboBox" name="Length_comboBox"/>
-     </item>
-     <item row="1" column="1">
-      <widget class="QComboBox" name="Current_comboBox"/>
-     </item>
-     <item row="2" column="0" colspan="2">
-      <widget class="QLabel" name="label_22">
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_15">
        <property name="frameShape">
         <enum>QFrame::Shape::Box</enum>
        </property>
        <property name="text">
-        <string>溫升</string>
+        <string>板厚</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLabel" name="label_24">
+       <property name="frameShape">
+        <enum>QFrame::Shape::Box</enum>
+       </property>
+       <property name="text">
+        <string>攝氏</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -207,23 +182,112 @@
        </property>
       </widget>
      </item>
+     <item row="8" column="1">
+      <widget class="QLabel" name="label_27">
+       <property name="frameShape">
+        <enum>QFrame::Shape::Box</enum>
+       </property>
+       <property name="text">
+        <string>單位</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_21">
+       <property name="frameShape">
+        <enum>QFrame::Shape::Box</enum>
+       </property>
+       <property name="text">
+        <string>電流</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="0">
+      <widget class="QLineEdit" name="HoleWallThickness"/>
+     </item>
+     <item row="2" column="0" colspan="2">
+      <widget class="QLabel" name="label_22">
+       <property name="frameShape">
+        <enum>QFrame::Shape::Box</enum>
+       </property>
+       <property name="text">
+        <string>溫升</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="label_18">
+       <property name="frameShape">
+        <enum>QFrame::Shape::Box</enum>
+       </property>
+       <property name="text">
+        <string>孔徑</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="1">
+      <widget class="QComboBox" name="HoleWallThickness_comboBox"/>
+     </item>
+     <item row="1" column="1">
+      <widget class="QComboBox" name="Current_comboBox"/>
+     </item>
+     <item row="6" column="1">
+      <widget class="QLabel" name="label_17">
+       <property name="frameShape">
+        <enum>QFrame::Shape::Box</enum>
+       </property>
+       <property name="text">
+        <string>單位</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QComboBox" name="BoardThickness_comboBox"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLineEdit" name="Current_lineEdit"/>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLineEdit" name="BoardThickness"/>
+     </item>
+     <item row="7" column="0">
+      <widget class="QLineEdit" name="ViaDiameter"/>
+     </item>
+     <item row="7" column="1">
+      <widget class="QComboBox" name="ViaDiameter_comboBox"/>
+     </item>
     </layout>
    </widget>
   </widget>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>260</x>
-     <y>10</y>
-     <width>661</width>
-     <height>261</height>
+     <x>480</x>
+     <y>20</y>
+     <width>261</width>
+     <height>311</height>
     </rect>
    </property>
    <property name="text">
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap resource="Scientific_computing.qrc">:/Line_With.bmp</pixmap>
+    <pixmap resource="Scientific_computing.qrc">:/cylindrical tube.bmp</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>
@@ -232,10 +296,10 @@
   <widget class="QGroupBox" name="groupBox_4">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>10</x>
      <y>340</y>
      <width>331</width>
-     <height>231</height>
+     <height>171</height>
     </rect>
    </property>
    <property name="title">
@@ -249,13 +313,45 @@
      <rect>
       <x>10</x>
       <y>20</y>
-      <width>311</width>
-      <height>191</height>
+      <width>301</width>
+      <height>131</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout_5" rowstretch="1,1,1,1,1,1" columnstretch="1,1,1,1">
-     <item row="4" column="1">
-      <widget class="QComboBox" name="Internal_comboBox"/>
+    <layout class="QGridLayout" name="gridLayout_5" rowstretch="0,0,0,0,0,0" columnstretch="0,0,0,0">
+     <item row="2" column="2">
+      <widget class="QLabel" name="label_30">
+       <property name="frameShape">
+        <enum>QFrame::Shape::Box</enum>
+       </property>
+       <property name="text">
+        <string>貫孔壓降</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="3">
+      <widget class="QComboBox" name="ViaImpedance_comboBox"/>
+     </item>
+     <item row="3" column="2">
+      <widget class="QLineEdit" name="ViaVoltageDrop_lineEdit"/>
+     </item>
+     <item row="3" column="3">
+      <widget class="QComboBox" name="ViaVoltageDrop_comboBox"/>
+     </item>
+     <item row="0" column="2" colspan="2">
+      <widget class="QLabel" name="label_25">
+       <property name="frameShape">
+        <enum>QFrame::Shape::Box</enum>
+       </property>
+       <property name="text">
+        <string>貫孔電阻</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignCenter</set>
+       </property>
+      </widget>
      </item>
      <item row="2" column="3">
       <widget class="QLabel" name="label_20">
@@ -270,94 +366,11 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
-      <widget class="QComboBox" name="External_comboBox"/>
-     </item>
-     <item row="0" column="2" colspan="2">
-      <widget class="QLabel" name="label_17">
-       <property name="frameShape">
-        <enum>QFrame::Shape::Box</enum>
-       </property>
-       <property name="text">
-        <string>走線電阻</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignmentFlag::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
      <item row="1" column="2">
-      <widget class="QLineEdit" name="Impedance_lineEdit"/>
+      <widget class="QLineEdit" name="ViaImpedance_lineEdit"/>
      </item>
-     <item row="4" column="0">
-      <widget class="QLineEdit" name="Internal_lineEdit"/>
-     </item>
-     <item row="4" column="3">
-      <widget class="QLabel" name="label_25">
-       <property name="frameShape">
-        <enum>QFrame::Shape::Box</enum>
-       </property>
-       <property name="text">
-        <string>W</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignmentFlag::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="3">
-      <widget class="QComboBox" name="Impedance_comboBox"/>
-     </item>
-     <item row="1" column="0" colspan="2">
-      <widget class="QLabel" name="label_26">
-       <property name="frameShape">
-        <enum>QFrame::Shape::Box</enum>
-       </property>
-       <property name="text">
-        <string>外層寬度</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignmentFlag::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="2">
-      <widget class="QLineEdit" name="VoltageDrop_lineEdit"/>
-     </item>
-     <item row="3" column="3">
-      <widget class="QComboBox" name="VoltageDrop_comboBox"/>
-     </item>
-     <item row="0" column="0" colspan="2">
-      <widget class="QLabel" name="label_14">
-       <property name="frameShape">
-        <enum>QFrame::Shape::Box</enum>
-       </property>
-       <property name="text">
-        <string>銅箔寬度</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignmentFlag::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLineEdit" name="External_lineEdit"/>
-     </item>
-     <item row="3" column="0" colspan="2">
-      <widget class="QLabel" name="label_27">
-       <property name="frameShape">
-        <enum>QFrame::Shape::Box</enum>
-       </property>
-       <property name="text">
-        <string>內層寬度</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignmentFlag::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="2">
-      <widget class="QLabel" name="label_19">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_29">
        <property name="frameShape">
         <enum>QFrame::Shape::Box</enum>
        </property>
@@ -369,24 +382,24 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="2">
-      <widget class="QLabel" name="label_18">
+     <item row="0" column="1">
+      <widget class="QLabel" name="label_26">
        <property name="frameShape">
         <enum>QFrame::Shape::Box</enum>
        </property>
        <property name="text">
-        <string>走線壓降</string>
+        <string>W</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignmentFlag::AlignCenter</set>
        </property>
       </widget>
      </item>
-     <item row="5" column="3">
-      <widget class="QComboBox" name="Consumption_comboBox"/>
+     <item row="1" column="0">
+      <widget class="QLineEdit" name="ViaConsumption_lineEdit"/>
      </item>
-     <item row="5" column="2">
-      <widget class="QLineEdit" name="Consumption_lineEdit"/>
+     <item row="1" column="1">
+      <widget class="QComboBox" name="ViaConsumption_comboBox"/>
      </item>
     </layout>
    </widget>
@@ -394,17 +407,17 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>360</x>
-     <y>290</y>
-     <width>531</width>
-     <height>271</height>
+     <x>410</x>
+     <y>350</y>
+     <width>391</width>
+     <height>261</height>
     </rect>
    </property>
    <property name="text">
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap resource="Scientific_computing.qrc">:/Line_With-power.bmp</pixmap>
+    <pixmap resource="Scientific_computing.qrc">:/via_formula.jpg</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>

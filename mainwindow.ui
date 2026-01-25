@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>5</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -222,6 +222,11 @@
       <string>走線電流計算</string>
      </attribute>
     </widget>
+    <widget class="QWidget" name="tab_6">
+     <attribute name="title">
+      <string>貫孔電流計算</string>
+     </attribute>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -230,7 +235,7 @@
      <x>0</x>
      <y>0</y>
      <width>993</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

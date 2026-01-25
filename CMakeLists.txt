@@ -33,6 +33,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Voltage_Divider.h Voltage_Divider.cpp Voltage_Divider.ui
         ResCap_Conversion.h ResCap_Conversion.cpp ResCap_Conversion.ui
         Line_Width.h Line_Width.cpp Line_Width.ui
+        via_current_cal.h via_current_cal.cpp via_current_cal.ui
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET Scientific_computing APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

@@ -5,5 +5,7 @@
         <file>LED.bmp</file>
         <file>Line_With.bmp</file>
         <file>Line_With-power.bmp</file>
+        <file>cylindrical tube.bmp</file>
+        <file>via_formula.jpg</file>
     </qresource>
 </RCC>

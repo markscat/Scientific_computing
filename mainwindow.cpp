@@ -5,6 +5,7 @@
 #include "Voltage_Divider.h"
 #include "ResCap_Conversion.h"
 #include "Line_Width.h"
+#include "via_current_cal.h"
 
 #include <QVBoxLayout>
 
@@ -103,6 +104,28 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tab_5->setLayout(LineWidth_layout);
 
     //--- Tab 5 End ---
+
+
+    // --- Tab 6 (貫孔電流設計) ---
+    // 建立一個垂直佈局，放在 MainWindow UI 的 tab_5 裡面
+    QVBoxLayout *Viacurrent_layout = new QVBoxLayout(ui->tab_6);
+
+    // 4. 建立你的 貫孔電流計算 實例，並把 handler 傳進去
+    Via_Current_cal *Viacurrent_Page = new Via_Current_cal(handler, ui->tab_6);
+
+    // 5. 把這個模組加進佈局中
+    Viacurrent_layout->addWidget(Viacurrent_Page);
+
+    // 6. 設定佈局邊距（設為 0 會比較緊湊，看起來像原生分頁）
+    Viacurrent_layout->setContentsMargins(0, 0, 0, 0);
+
+    ui->tab_5->setLayout(Viacurrent_layout);
+
+    //--- Tab 5 End ---
+
+
+
+
 }
 
 MainWindow::~MainWindow()
