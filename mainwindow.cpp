@@ -8,6 +8,7 @@
 #include "via_current_cal.h"
 
 #include <QVBoxLayout>
+#include <QMessageBox> // 記得在檔案最上方 include
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -156,3 +157,33 @@ void MainWindow::updateResult() {
     // 顯示結果 (使用 'g' 格式，自動處理 0 且避免太長)
     ui->Outputput_lineEdit->setText(QString::number(result, 'g', 10));
 }
+
+void MainWindow::on_actionAbout_triggered()
+{
+    // 使用 QMessageBox 的靜態函數 about
+    QMessageBox::about(this,
+                       tr("關於本軟體"),
+                       tr("<h3>硬體設計 工具箱 V1.0</h3>"
+                          "<p>版權所有 © 2024 Ethan Yang (Markscat)</p>"
+                          "<p>本程式提供 :<br/>"
+                          "1. 科學記號的轉換<br/>"
+                          "2. 電阻和電容編碼換算<br/>"
+                          "3. 電阻分壓計算<br/>"
+                          "4. LED限流電阻計算<br/>"
+                          "5. PCB 走線電流計算及單位換算功能。<br/>"
+                          "6. PCB貫孔電流計算</p>"
+                          "<p>公式參考：IPC-2221 標準。</p>"
+                          "有興趣討論的話,請發郵件給我"
+                          "<a href='mailto:markscat@gmail.com'>markscat@gmail.com</a></p>"
+
+
+           "<p>本程式為自由軟體；您可以根據自由軟體基金會所發佈的 "
+           "GNU 通用公共許可證 (GNU General Public License) 條款，"
+           "對其進行重新分發和/或修改；無論您使用的是許可證的第三版，"
+
+           "<p>發佈此程式是希望它能發揮作用，但<b>不提供任何保證</b>；"
+           "甚至不包含對<b>適銷性</b>或<b>特定用途適用性</b>的暗示性保證。"
+           "詳情請參閱 GNU 通用公共許可證。</p>"
+           "<p>請參閱 <a href='https://www.gnu.org/licenses/'>https://www.gnu.org/licenses/</a>。</p>"));
+}
+

@@ -29,10 +29,11 @@ public:
 private:
     Ui::Line_Width *ui;
 
+
+
+
+private slots:
     void updateCalculation();
-
-    void on_Mass_lineEdit_textChanged(const QString &arg1);
-
 };
 
 #endif // LINE_WIDTH_H

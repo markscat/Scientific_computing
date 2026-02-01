@@ -55,9 +55,15 @@ Line_Width::Line_Width(UnitConverterHandler *sharedHandler, QWidget *parent) :
         }
     });
 
+
+    // --- 關鍵修改：使用 textEdited 區分誰是輸入源 ---
+    connect(ui->Current_lineEdit, &QLineEdit::textEdited, this, &Line_Width::updateCalculation);
+    connect(ui->External_lineEdit, &QLineEdit::textEdited, this, &Line_Width::updateCalculation);
+    connect(ui->Internal_lineEdit, &QLineEdit::textEdited, this, &Line_Width::updateCalculation);
+
     // 3. 核心連動：所有會觸發「演算法」的訊號
     // 只要 mm 框變了，或是電流、長度、單位變了，就執行計算
-    QList<QLineEdit*> inputs = { ui->thickness_lineEdit, ui->Current_lineEdit,
+    QList<QLineEdit*> inputs = { ui->thickness_lineEdit,
                                  ui->temp_lineEdit, ui->Length_lineEdit };
     for(auto edit : inputs)
         connect(edit, &QLineEdit::textChanged, this, &Line_Width::updateCalculation);
@@ -69,8 +75,8 @@ Line_Width::Line_Width(UnitConverterHandler *sharedHandler, QWidget *parent) :
     for(auto box : boxes)
         connect(box, &QComboBox::currentIndexChanged, this, &Line_Width::updateCalculation);
 
-
 }
+
 Line_Width::~Line_Width()
 {
     delete ui;
@@ -85,42 +91,88 @@ void Line_Width::updateCalculation() {
     double current = ui->Current_lineEdit->text().toDouble(&okI);
     if (ui->Current_comboBox->currentIndex() == 1) current /= 1000.0; // mA -> A
 
-    double deltaT = ui->temp_lineEdit->text().toDouble(&okDelta);
+    //double deltaT = ui->temp_lineEdit->text().toDouble(&okDelta);
+    double deltaT = ui->temp_lineEdit->text().toDouble();
     double length = ui->Length_lineEdit->text().toDouble(&okL);
 
     // 取得銅厚並轉換為 mm
-    double rawT = ui->thickness_lineEdit->text().toDouble(&okT);
+    //double rawT = ui->thickness_lineEdit->text().toDouble(&okT);
+    double rawT = ui->thickness_lineEdit->text().toDouble();
+
     double thickness_mm = rawT;
-    if (ui->thickness_comboBox->currentIndex() == 1) thickness_mm = rawT * 0.0254; // mil -> mm
-    else if (ui->thickness_comboBox->currentIndex() == 2) thickness_mm = rawT / 1000.0; // um -> mm
+    if (ui->thickness_comboBox->currentIndex() == 1){
+        thickness_mm = rawT * 0.0254; // mil -> mm
+    }
+    else if (ui->thickness_comboBox->currentIndex() == 2) {
+        thickness_mm = rawT / 1000.0; // um -> mm
+    }
 
     //double thickness_mm = ui->thickness_lineEdit->text().toDouble(&okT);
+    double thickness_mil = thickness_mm / 0.0254;
 
-    if (okI && okDelta && okT) {
-        // --- 1. 線寬計算 (IPC-2221 公式) ---
-        // Area (mil^2) = (I / (k * deltaT^0.44))^(1 / 0.725)
-        double thickness_mil = thickness_mm / 0.0254;
+    if (deltaT <= 0 || thickness_mil <= 0){
+        isCalculating = false; return;
+    }
 
-        // 外層 k = 0.048, 內層 k = 0.024
-        auto calcWidth = [&](double k) {
-            if (deltaT <= 0) return 0.0;
-            // Area (mil^2) = (I / (k * deltaT^0.44))^(1 / 0.725)
-            double area = std::pow((current / (k * std::pow(deltaT, 0.44))), (1.0 / 0.725));
-            return (area / thickness_mil) * 0.0254; // 回傳 mm
-        };
+    // --- 核心邏輯：判斷是誰觸發的 ---
+    QObject* s = sender();
 
-        double widthExt_mm = calcWidth(0.048);
-        double widthInt_mm = calcWidth(0.024);
+    if (s == ui->External_lineEdit) {
+        // A. 如果使用者在改【外層寬度】 -> 反推電流
+        double wExt = ui->External_lineEdit->text().toDouble();
+        if (ui->External_comboBox->currentIndex() == 1){
+            wExt *= 0.0254; // mil to mm
+            }
+        double area_mil2 = (wExt / 0.0254) * thickness_mil;
+        // 逆公式: I = 0.048 * dT^0.44 * Area^0.725
+        current = 0.048 * std::pow(deltaT, 0.44) * std::pow(area_mil2, 0.725);
+
+        // 更新電流框
+        double dispI = (ui->Current_comboBox->currentIndex() == 1) ? current * 1000 : current;
+        ui->Current_lineEdit->setText(QString::number(dispI, 'g', 5));
+
+    } else if (s == ui->Internal_lineEdit) {
+        // B. 如果使用者在改【內層寬度】 -> 反推電流
+        double wInt = ui->Internal_lineEdit->text().toDouble();
+        if (ui->Internal_comboBox->currentIndex() == 1) wInt *= 0.0254;
+        double area_mil2 = (wInt / 0.0254) * thickness_mil;
+        current = 0.024 * std::pow(deltaT, 0.44) * std::pow(area_mil2, 0.725);
+
+        double dispI = (ui->Current_comboBox->currentIndex() == 1) ? current * 1000 : current;
+        ui->Current_lineEdit->setText(QString::number(dispI, 'g', 5));
+    } else {
+        // C. 其他情況 (改電流、改溫升、改銅厚) -> 正常算線寬
+        current = ui->Current_lineEdit->text().toDouble();
+        if (ui->Current_comboBox->currentIndex() == 1) current /= 1000.0;
+    }
 
 
-        // 顯示結果 (處理單位換算，假設 0:mm, 1:mil)
-        auto displayWidth = [&](QLineEdit* edit, QComboBox* box, double val_mm) {
-            double out = (box->currentIndex() == 1) ? val_mm / 0.0254 : val_mm;
-            edit->setText(QString::number(out, 'f', 4));
-        };
+    // --- 最後：根據最終產出的 current，更新所有結果欄位 ---
+    auto calcWidth = [&](double k) {
+        double area = std::pow((current / (k * std::pow(deltaT, 0.44))), (1.0 / 0.725));
+        return (area / thickness_mil) * 0.0254; // mm
+    };
 
-        displayWidth(ui->External_lineEdit, ui->External_comboBox, widthExt_mm);
-        displayWidth(ui->Internal_lineEdit, ui->Internal_comboBox, widthInt_mm);
+
+    double widthExt_mm = (s == ui->External_lineEdit) ?
+                             (ui->External_lineEdit->text().toDouble() *
+                             (ui->External_comboBox->currentIndex()==1?0.0254:1.0)) : calcWidth(0.048);
+    double widthInt_mm = (s == ui->Internal_lineEdit) ?
+                             (ui->Internal_lineEdit->text().toDouble() *
+                             (ui->Internal_comboBox->currentIndex()==1?0.0254:1.0)) : calcWidth(0.024);
+
+
+    //double finalExt = calcWidth(0.048);
+    //double finalInt = calcWidth(0.024);
+
+    if (s != ui->External_lineEdit) {
+        double out = (ui->External_comboBox->currentIndex() == 1) ? widthExt_mm / 0.0254 : widthExt_mm;
+        ui->External_lineEdit->setText(QString::number(out, 'f', 4));
+    }
+    if (s != ui->Internal_lineEdit) {
+        double out = (ui->Internal_comboBox->currentIndex() == 1) ? widthInt_mm / 0.0254 : widthInt_mm;
+        ui->Internal_lineEdit->setText(QString::number(out, 'f', 4));
+    }
 
         // --- 2. 電阻/壓降/功耗計算 (以外層寬度為例) ---
         if (okL && length > 0) {
@@ -153,20 +205,7 @@ void Line_Width::updateCalculation() {
             double dispP = (ui->Consumption_comboBox->currentIndex() == 0) ? pLoss * 1000 : pLoss;
             ui->Consumption_lineEdit->setText(QString::number(dispP, 'g', 5));
         }
-    }
-    isCalculating = false;
-}
 
-// 銅厚連動邏輯 (oz -> mm)
-void Line_Width::on_Mass_lineEdit_textChanged(const QString &arg1) {
-    if (isCalculating) return;
-    bool ok;
-    double oz = arg1.toDouble(&ok);
-    if (ok) {
-        isCalculating = true;
-        ui->thickness_lineEdit->setText(QString::number(oz * OZ_TO_MM, 'g', 5));
-        //ui->thickness_lineEdit->setText(QString::number(oz * 0.03432867, 'g', 5));
-        isCalculating = false;
-        updateCalculation();
-    }
+    isCalculating = false;
+
 }
