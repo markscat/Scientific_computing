@@ -1,22 +1,22 @@
-# Qt Creator user settings (���a�]�w�A��������)
+# Qt Creator user settings (Qt Creator 使用者設定檔)
 *.pro.user
 *.user
 
-# CMake build directory (�ظm���G��Ƨ�)
+# CMake build directory (建置目錄與編譯檔案)
 # ----------------------------------------
-# ������� build/ �ؿ��U���Ҧ����e
+# 忽略 build/ 目錄下的所有內容
 build/
 
-# ���u���v���� build/Release/ (��������)
+# 但保留 build/Release/ (不忽略)
 !build/Release/
 
-# �p�G build/Release/ �U�٦��l�ؿ��A���Ʊ�Q�����A�]�i�H�~��K�[�������W�h
-# �Ҧp�A�p�G Release/ �U�� my_release_binary.exe �A�Q�l�ܡA�����Q�l�ܨ�L���G
+# 如果 build/Release/ 下還有子目錄，且不想被忽略，也可以另外加上排除規則
+# 例如，如果 Release/ 下有 my_release_binary.exe 想保留，而不想保留其他檔案：
 # !build/Release/my_release_binary.exe
 
-# CMake generated files (CMake �֨��M�����ɮ�)
+# CMake generated files (CMake 產生和產生的檔案)
 CMakeCache.txt
-CMakeLists.txt
+!CMakeLists.txt
 CMakeCache.txt.usr
 CMakeFiles/
 cmake_install.cmake
@@ -24,30 +24,30 @@ Makefile
 CPackConfig.cmake
 CTestTestfile.cmake
 
-# Ninja build files (�p�G�A�� CMake �ϥ� Ninja �@���ͦ���)
+# Ninja build files (如果你用 CMake 搭配 Ninja 所生成的檔案)
 .ninja_deps
 .ninja_log
 
-# Executables and libraries (�i�����ɩM�w�ɮ�)
+# Executables and libraries (可執行檔和靜態/動態函式庫)
 *.exe
 *.dll
 *.lib
 *.so
 *.dylib
 
-# Object files (�sĶ��������)
+# Object files (編譯過程產生的目標檔)
 *.obj
 *.o
 *.lo
 
-# Debugging files
+# Debugging files (除錯用檔案)
 *.pdb
 *.ilk
 
-# Qt specific files (Qt Designer ������ UI �sĶ�����A�q�`�ѽsĶ���۰ʥͦ�)
+# Qt specific files (Qt Designer 產生的 UI 標頭檔，通常由編譯過程自動產生)
 ui_*.h
 moc_*.cpp
 qrc_*.cpp
-*.qrc.cpp # for newer Qt versions
+*.qrc.cpp # 給較新 Qt 版本用的
 *.json
 icon/—Pngtree—wifi vector icon_4015278.png
