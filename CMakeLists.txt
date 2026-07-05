@@ -47,6 +47,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ui/via_current_cal.ui
         ui/Voltage_Divider.ui
         resources/Scientific_computing.qrc
+        ui/opa_analysis.ui
+        inc/opa_analysis.h
+        src/opa_analysis.cpp
         #ui/Scientific_computing.qrc
         #ui/Scientific_computing.qrc
         #ui/Scientific_computing.qrc

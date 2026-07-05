@@ -6,6 +6,7 @@
 #include "./inc/ResCap_Conversion.h"
 #include "./inc/Line_Width.h"
 #include "./inc/via_current_cal.h"
+#include "./inc/opa_analysis.h"
 
 #include <QVBoxLayout>
 #include <QMessageBox> // 記得在檔案最上方 include
@@ -120,12 +121,32 @@ MainWindow::MainWindow(QWidget *parent)
     // 6. 設定佈局邊距（設為 0 會比較緊湊，看起來像原生分頁）
     Viacurrent_layout->setContentsMargins(0, 0, 0, 0);
 
-    ui->tab_5->setLayout(Viacurrent_layout);
+    ui->tab_6->setLayout(Viacurrent_layout);
 
-    //--- Tab 5 End ---
+    //--- Tab 6 End ---
 
+    // --- Tab 7 (運算放大器基本計算) ---
+    // 建立一個垂直佈局，放在 MainWindow UI 的 tab_7 裡面
+    QVBoxLayout *OPA_layout = new QVBoxLayout(ui->tab_7);
 
+    // 2. 建立實例 (注意這裡加上了 OPA_Analysis* 宣告，並傳入 handler 和指定 tab_7 為 parent)
+    // 假設您的 OPA_Analysis 建構式有支援傳入 handler
+    OPA_Analysis *opaPage = new OPA_Analysis(handler, ui->tab_7);
+    //mainwindow.cpp:134:33: No matching constructor for initialization of 'OPA_Analysis'
+    //opa_analysis.h:15:14: candidate constructor not viable: allows at most single argument 'parent', but 2 arguments were provided
+    //opa_analysis.h:10:7: candidate constructor (the implicit copy constructor) not viable: requires 1 argument, but 2 were provided
 
+    // 建立 OPA 模組實例 (注意：若不需要 handler，傳 this 即可)
+    //opaPage = new OPA_Analysis(this);
+
+    // 把這個模組加進佈局中
+    OPA_layout->addWidget(opaPage);
+
+    // 設定佈局邊距
+    OPA_layout->setContentsMargins(0, 0, 0, 0);
+
+    // 將佈局設定給 tab_7
+    ui->tab_7->setLayout(OPA_layout);
 
 }
 

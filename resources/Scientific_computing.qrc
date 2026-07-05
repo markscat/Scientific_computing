@@ -8,5 +8,6 @@
         <file>Voltage_divider.bmp</file>
         <file>Voltage_divider-f.bmp</file>
         <file>with.bmp</file>
+        <file>Op-Amp_Internal.svg</file>
     </qresource>
 </RCC>

@@ -297,7 +297,7 @@
     </widget>
     <widget class="QWidget" name="tab_7">
      <attribute name="title">
-      <string>儲能元件分析</string>
+      <string>願算放大器分析</string>
      </attribute>
     </widget>
    </widget>
