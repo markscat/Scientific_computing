@@ -13,43 +13,31 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QDockWidget" name="dockWidget">
+  <widget class="QTextBrowser" name="textBrowser">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>100</y>
-     <width>831</width>
-     <height>541</height>
+     <x>530</x>
+     <y>400</y>
+     <width>256</width>
+     <height>192</height>
     </rect>
    </property>
-   <widget class="QWidget" name="dockWidgetContents">
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>0</y>
-       <width>401</width>
-       <height>371</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="../resources/Scientific_computing.qrc">:/resources/Op-Amp_Internal.svg</pixmap>
-     </property>
-    </widget>
-    <widget class="QTextBrowser" name="textBrowser">
-     <property name="geometry">
-      <rect>
-       <x>440</x>
-       <y>30</y>
-       <width>256</width>
-       <height>192</height>
-      </rect>
-     </property>
-    </widget>
-   </widget>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>20</y>
+     <width>401</width>
+     <height>351</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="../resources/Scientific_computing.qrc">:/resources/Op-Amp_Internal.svg</pixmap>
+   </property>
   </widget>
  </widget>
  <resources>

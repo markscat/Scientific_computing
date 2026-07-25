@@ -23,6 +23,9 @@ MainWindow::MainWindow(QWidget *parent)
     // 建立處理器
     UnitConverterHandler *handler = new UnitConverterHandler();
 
+
+    /*tab begin*/
+
     // 1. 填寫表格
     handler->setupMatrixTable(ui->matrixTable);
 
@@ -40,6 +43,22 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->output_comboBox, &QComboBox::currentIndexChanged, this, &MainWindow::updateResult);
 
 
+    /*尺寸換算_begin*/
+    // 連接長度換算的信號
+    connect(ui->unit_of_length_Input_lineEdit, &QLineEdit::textChanged, this, &MainWindow::updateLengthConversion);
+    connect(ui->unit_of_length_input_comboBox, &QComboBox::currentIndexChanged, this, &MainWindow::updateLengthConversion);
+    connect(ui->unit_of_length_output_comboBox, &QComboBox::currentIndexChanged, this, &MainWindow::updateLengthConversion);
+
+    // 設定長度單位下拉選單
+    QStringList lengthUnits = {"inch", "cm", "mil", "mm"};
+    ui->unit_of_length_input_comboBox->addItems(lengthUnits);
+    ui->unit_of_length_output_comboBox->addItems(lengthUnits);
+    ui->unit_of_length_input_comboBox->setCurrentIndex(3); // 預設 mm
+    ui->unit_of_length_output_comboBox->setCurrentIndex(0); // 預設 inch
+
+    /*尺寸換算_end*/
+
+    /*Tab end*/
 
     // --- Tab 2 初始化 ---
 
@@ -206,5 +225,51 @@ void MainWindow::on_actionAbout_triggered()
            "甚至不包含對<b>適銷性</b>或<b>特定用途適用性</b>的暗示性保證。"
            "詳情請參閱 GNU 通用公共許可證。</p>"
            "<p>請參閱 <a href='https://www.gnu.org/licenses/'>https://www.gnu.org/licenses/</a>。</p>"));
+}
+
+void MainWindow::updateLengthConversion() {
+    bool ok;
+    double inputVal = ui->unit_of_length_Input_lineEdit->text().toDouble(&ok);
+
+    if (!ok) {
+        ui->unit_of_length_output_lineEdit->clear();
+        return;
+    }
+
+    // 獲取單位索引
+    /* fromIdx,toIdx 結果為0到3的整數值,用來對應mm,cm,inch,mil
+     *
+     * 轉換倍率表：每個單位換算成 mm 的倍率
+     * 順序: inch, cm, mil, mm
+     *
+     */
+    int fromIdx = ui->unit_of_length_input_comboBox->currentIndex();
+    int toIdx = ui->unit_of_length_output_comboBox->currentIndex();
+
+    // 所有單位轉換到 mm 的轉換因子
+    // inch -> mm: *25.4, cm -> mm: *10, mil -> mm: *0.0254, mm -> mm: *1
+    double toMM[] = {25.4, 10.0, 0.0254, 1.0};
+    //                   ↑     ↑      ↑     ↑
+    //            1 inch  1 cm  1 mil  1 mm
+    //            =25.4mm =10mm =0.0254mm =1mm
+
+    // 先轉換成 mm
+
+    // 步驟1: 不管輸入什麼單位，先統統轉換成 mm
+    // 例如：輸入 2 inch → 2 × 25.4 = 50.8 mm
+    // 例如：輸入 100 mil → 100 × 0.0254 = 2.54 mm
+    // 例如：輸入 5 cm → 5 × 10.0 = 50 mm
+
+    double valueInMM = inputVal * toMM[fromIdx];
+
+    // 再從 mm 轉換到目標單位
+
+    // 步驟2: 從 mm 轉換到目標單位
+    // 例如：50.8 mm → 要轉成 cm → 50.8 ÷ 10.0 = 5.08 cm
+    // 例如：2.54 mm → 要轉成 inch → 2.54 ÷ 25.4 = 0.1 inch
+    // 例如：50 mm → 要轉成 mm → 50 ÷ 1.0 = 50 mm (不變)
+    double result = valueInMM / toMM[toIdx];
+
+    ui->unit_of_length_output_lineEdit->setText(QString::number(result, 'g', 10));
 }
 
