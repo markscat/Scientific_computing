@@ -284,7 +284,7 @@
       <property name="alignment">
        <set>Qt::AlignmentFlag::AlignCenter</set>
       </property>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>11</x>
@@ -327,7 +327,11 @@
          <widget class="QComboBox" name="unit_of_length_input_comboBox"/>
         </item>
         <item row="1" column="2">
-         <widget class="QLineEdit" name="unit_of_length_output_lineEdit"/>
+         <widget class="QLineEdit" name="unit_of_length_output_lineEdit">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
         <item row="1" column="3">
          <widget class="QComboBox" name="unit_of_length_output_comboBox"/>
@@ -374,7 +378,7 @@
      <x>0</x>
      <y>0</y>
      <width>1112</width>
-     <height>28</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
