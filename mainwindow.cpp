@@ -44,6 +44,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     /*尺寸換算_begin*/
+
     // 連接長度換算的信號
     connect(ui->unit_of_length_Input_lineEdit, &QLineEdit::textChanged, this, &MainWindow::updateLengthConversion);
     connect(ui->unit_of_length_input_comboBox, &QComboBox::currentIndexChanged, this, &MainWindow::updateLengthConversion);
@@ -57,6 +58,56 @@ MainWindow::MainWindow(QWidget *parent)
     ui->unit_of_length_output_comboBox->setCurrentIndex(0); // 預設 inch
 
     /*尺寸換算_end*/
+
+    /*功率計算_begin*/
+    //V_Input_lineEdit
+    //I_Input_lineEdit
+    //R_Input_lineEdit
+
+    //V_input_comboBox
+    //Amp_input_comboBox
+    //Ohm_input_comboBox
+    //Power_Input_comboBox
+
+
+    ui->V_input_comboBox->clear(); // 務必先清空，確保 Index 0 就是 mV
+    ui->V_input_comboBox->addItem("mV", 0.001);
+    ui->V_input_comboBox->addItem("V", 1.0);
+    ui->V_input_comboBox->addItem("kV", 1000.0);
+
+    //connect(ui->V_Input_lineEdit, &QLineEdit::textEdited, this, &MainWindow::updatePowerConversion);
+    //connect(ui->V_input_comboBox, &QComboBox::currentIndexChanged, this, &MainWindow::updatePowerConversion);
+
+
+    ui->Amp_input_comboBox->clear(); // 務必先清空，確保 Index 0 就是 mA
+    ui->Amp_input_comboBox->addItem("mA", 0.001);
+    ui->Amp_input_comboBox->addItem("A", 1.0);
+    ui->Amp_input_comboBox->addItem("kA", 1000.0);
+
+    //connect(ui->I_Input_lineEdit, &QLineEdit::textEdited, this, &MainWindow::updatePowerConversion);
+    //connect(ui->Amp_input_comboBox, &QComboBox::currentIndexChanged, this, &MainWindow::updatePowerConversion);
+
+    ui->Ohm_input_comboBox->clear(); // 務必先清空，確保 Index 0 就是 mOHM
+    ui->Ohm_input_comboBox->addItem("mohm", 0.001);
+    ui->Ohm_input_comboBox->addItem("ohm", 1.0);
+    ui->Ohm_input_comboBox->addItem("kohm", 1000.0);
+
+    //connect(ui->R_Input_lineEdit, &QLineEdit::textEdited, this, &MainWindow::updatePowerConversion);
+    //connect(ui->Ohm_input_comboBox, &QComboBox::currentIndexChanged, this, &MainWindow::updatePowerConversion);
+
+
+    ui->Power_Input_comboBox->clear(); // 務必先清空，確保 Index 0 就是 mW
+    ui->Power_Input_comboBox->addItem("mW", 0.001);
+    ui->Power_Input_comboBox->addItem("W", 1.0);
+    ui->Power_Input_comboBox->addItem("kW", 1000.0);
+
+    //connect(ui->Power_Input_lineEdit, &QLineEdit::textEdited, this, &MainWindow::updatePowerConversion);
+    //connect(ui->Power_Input_comboBox, &QComboBox::currentIndexChanged, this, &MainWindow::updatePowerConversion);
+
+    connect(ui->Enter_pushButton, &QPushButton::clicked, this, &MainWindow::updatePowerConversion);
+
+
+    /*功率計算_end*/
 
     /*Tab end*/
 
@@ -151,9 +202,6 @@ MainWindow::MainWindow(QWidget *parent)
     // 2. 建立實例 (注意這裡加上了 OPA_Analysis* 宣告，並傳入 handler 和指定 tab_7 為 parent)
     // 假設您的 OPA_Analysis 建構式有支援傳入 handler
     OPA_Analysis *opaPage = new OPA_Analysis(handler, ui->tab_7);
-    //mainwindow.cpp:134:33: No matching constructor for initialization of 'OPA_Analysis'
-    //opa_analysis.h:15:14: candidate constructor not viable: allows at most single argument 'parent', but 2 arguments were provided
-    //opa_analysis.h:10:7: candidate constructor (the implicit copy constructor) not viable: requires 1 argument, but 2 were provided
 
     // 建立 OPA 模組實例 (注意：若不需要 handler，傳 this 即可)
     //opaPage = new OPA_Analysis(this);
@@ -271,5 +319,56 @@ void MainWindow::updateLengthConversion() {
     double result = valueInMM / toMM[toIdx];
 
     ui->unit_of_length_output_lineEdit->setText(QString::number(result, 'g', 10));
+}
+
+void MainWindow::updatePowerConversion(){
+
+    bool V_ok,I_ok,R_ok,P_ok;
+
+    double V_inputVal = (ui->V_Input_lineEdit->text().toDouble(&V_ok)) * (ui->V_input_comboBox->currentData().toDouble());
+    double I_inputVal = (ui->I_Input_lineEdit->text().toDouble(&I_ok)) * (ui->Amp_input_comboBox->currentData().toDouble());
+    double R_inputVal = (ui->R_Input_lineEdit->text().toDouble(&R_ok)) * (ui->Ohm_input_comboBox->currentData().toDouble());
+    double P_inputVal = (ui->Power_Input_lineEdit->text().toDouble(&P_ok)) * (ui->Power_Input_comboBox->currentData().toDouble());
+
+
+    // 2. 檢查是否至少有兩個輸入
+    int count = (V_ok ? 1 : 0) + (I_ok ? 1 : 0) + (R_ok ? 1 : 0) + (P_ok ? 1 : 0);
+
+    if (count < 2) {
+        QMessageBox::warning(this, "提示", "請至少輸入兩個參數以進行計算。");
+        return;
+    }
+
+
+    for (int i = 0; i < 2; ++i) {
+        // V = I * R
+        if (!V_ok && I_ok && R_ok) { V_inputVal = I_inputVal * R_inputVal; V_ok = true; }
+        if (!I_ok && V_ok && R_ok && R_inputVal != 0) { I_inputVal = V_inputVal / R_inputVal; I_ok = true; }
+        if (!R_ok && V_ok && I_ok && I_inputVal != 0) { R_inputVal = V_inputVal / I_inputVal; R_ok = true; }
+
+        // P = V * I
+        if (!P_ok && V_ok && I_ok) { P_inputVal = V_inputVal * I_inputVal; P_ok = true; }
+        if (!V_ok && P_ok && I_ok && I_inputVal != 0) { V_inputVal = P_inputVal / I_inputVal; V_ok = true; }
+        if (!I_ok && P_ok && V_ok && V_inputVal != 0) { I_inputVal = P_inputVal / V_inputVal; I_ok = true; }
+
+        // P = I^2 * R (補充公式，處理只有 P 和 R 的特殊情況)
+        if (!I_ok && P_ok && R_ok && R_inputVal > 0) { I_inputVal = std::sqrt(P_inputVal / R_inputVal); I_ok = true; }
+        if (!V_ok && P_ok && R_ok && R_inputVal > 0) { V_inputVal = std::sqrt(P_inputVal * R_inputVal); V_ok = true; }
+    }
+
+
+    // 輸出時，要把標準單位的數值「除回」當前選中的單位倍率
+    if (V_ok) ui->V_Input_lineEdit->setText(QString::number(V_inputVal / ui->V_input_comboBox->currentData().toDouble(), 'g', 6));
+    if (I_ok) ui->I_Input_lineEdit->setText(QString::number(I_inputVal / ui->Amp_input_comboBox->currentData().toDouble(), 'g', 6));
+    if (R_ok) ui->R_Input_lineEdit->setText(QString::number(R_inputVal / ui->Ohm_input_comboBox->currentData().toDouble(), 'g', 6));
+    if (P_ok) ui->Power_Input_lineEdit->setText(QString::number(P_inputVal / ui->Power_Input_comboBox->currentData().toDouble(), 'g', 6));
+}
+
+
+void MainWindow::on_clearButton_clicked() {
+    ui->V_Input_lineEdit->clear();
+    ui->I_Input_lineEdit->clear();
+    ui->R_Input_lineEdit->clear();
+    ui->Power_Input_lineEdit->clear();
 }
 

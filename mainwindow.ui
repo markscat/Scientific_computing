@@ -272,7 +272,7 @@
      <widget class="QGroupBox" name="groupBox_2">
       <property name="geometry">
        <rect>
-        <x>240</x>
+        <x>50</x>
         <y>540</y>
         <width>441</width>
         <height>101</height>
@@ -337,6 +337,101 @@
          <widget class="QComboBox" name="unit_of_length_output_comboBox"/>
         </item>
        </layout>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_3">
+      <property name="geometry">
+       <rect>
+        <x>570</x>
+        <y>530</y>
+        <width>331</width>
+        <height>201</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>功率計算</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignCenter</set>
+      </property>
+      <widget class="QWidget" name="layoutWidget_2">
+       <property name="geometry">
+        <rect>
+         <x>11</x>
+         <y>30</y>
+         <width>221</width>
+         <height>161</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="1" column="0">
+         <widget class="QLineEdit" name="V_Input_lineEdit"/>
+        </item>
+        <item row="2" column="1">
+         <widget class="QComboBox" name="Amp_input_comboBox"/>
+        </item>
+        <item row="0" column="0" colspan="2">
+         <widget class="QLabel" name="label_10">
+          <property name="frameShape">
+           <enum>QFrame::Shape::Box</enum>
+          </property>
+          <property name="text">
+           <string>輸入</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLineEdit" name="I_Input_lineEdit"/>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLineEdit" name="R_Input_lineEdit"/>
+        </item>
+        <item row="1" column="1">
+         <widget class="QComboBox" name="V_input_comboBox"/>
+        </item>
+        <item row="3" column="1">
+         <widget class="QComboBox" name="Ohm_input_comboBox"/>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLineEdit" name="Power_Input_lineEdit">
+          <property name="readOnly">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QComboBox" name="Power_Input_comboBox"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QPushButton" name="Enter_pushButton">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>110</y>
+         <width>75</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Enter</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="clearButton">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>130</y>
+         <width>75</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Clear</string>
+       </property>
       </widget>
      </widget>
     </widget>

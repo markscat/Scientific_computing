@@ -25,6 +25,10 @@ private slots:
     void on_actionAbout_triggered();
 
     void updateLengthConversion(); // 新增長度換算槽函數
+    void updatePowerConversion();
+
+
+    void on_clearButton_clicked();
 
 private:
     Ui::MainWindow *ui;
