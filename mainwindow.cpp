@@ -69,14 +69,22 @@ MainWindow::MainWindow(QWidget *parent)
     //Ohm_input_comboBox
     //Power_Input_comboBox
 
+    auto updateOrder = [this](QString name) {
+        if (firstInput != name) {
+            secondInput = firstInput;
+            firstInput = name;
+        }
+    };
+
+
 
     ui->V_input_comboBox->clear(); // 務必先清空，確保 Index 0 就是 mV
     ui->V_input_comboBox->addItem("mV", 0.001);
     ui->V_input_comboBox->addItem("V", 1.0);
     ui->V_input_comboBox->addItem("kV", 1000.0);
 
-    //connect(ui->V_Input_lineEdit, &QLineEdit::textEdited, this, &MainWindow::updatePowerConversion);
-    //connect(ui->V_input_comboBox, &QComboBox::currentIndexChanged, this, &MainWindow::updatePowerConversion);
+    connect(ui->V_Input_lineEdit, &QLineEdit::textEdited, [=](){ updateOrder("V"); });
+    connect(ui->V_input_comboBox, &QComboBox::currentIndexChanged, [=](){ updateOrder("V"); updatePowerConversion(); });
 
 
     ui->Amp_input_comboBox->clear(); // 務必先清空，確保 Index 0 就是 mA
@@ -84,16 +92,16 @@ MainWindow::MainWindow(QWidget *parent)
     ui->Amp_input_comboBox->addItem("A", 1.0);
     ui->Amp_input_comboBox->addItem("kA", 1000.0);
 
-    //connect(ui->I_Input_lineEdit, &QLineEdit::textEdited, this, &MainWindow::updatePowerConversion);
-    //connect(ui->Amp_input_comboBox, &QComboBox::currentIndexChanged, this, &MainWindow::updatePowerConversion);
+    connect(ui->I_Input_lineEdit, &QLineEdit::textEdited, [=](){ updateOrder("I"); });
+    connect(ui->Amp_input_comboBox, &QComboBox::currentIndexChanged, [=](){ updateOrder("I"); updatePowerConversion(); });
 
     ui->Ohm_input_comboBox->clear(); // 務必先清空，確保 Index 0 就是 mOHM
     ui->Ohm_input_comboBox->addItem("mohm", 0.001);
     ui->Ohm_input_comboBox->addItem("ohm", 1.0);
     ui->Ohm_input_comboBox->addItem("kohm", 1000.0);
 
-    //connect(ui->R_Input_lineEdit, &QLineEdit::textEdited, this, &MainWindow::updatePowerConversion);
-    //connect(ui->Ohm_input_comboBox, &QComboBox::currentIndexChanged, this, &MainWindow::updatePowerConversion);
+    connect(ui->R_Input_lineEdit, &QLineEdit::textEdited, [=](){ updateOrder("R"); });
+    connect(ui->Ohm_input_comboBox, &QComboBox::currentIndexChanged, [=](){ updateOrder("I"); updatePowerConversion(); });
 
 
     ui->Power_Input_comboBox->clear(); // 務必先清空，確保 Index 0 就是 mW
@@ -101,8 +109,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->Power_Input_comboBox->addItem("W", 1.0);
     ui->Power_Input_comboBox->addItem("kW", 1000.0);
 
-    //connect(ui->Power_Input_lineEdit, &QLineEdit::textEdited, this, &MainWindow::updatePowerConversion);
-    //connect(ui->Power_Input_comboBox, &QComboBox::currentIndexChanged, this, &MainWindow::updatePowerConversion);
+    connect(ui->Power_Input_lineEdit, &QLineEdit::textEdited, [=](){ updateOrder("R"); });
+    connect(ui->Power_Input_comboBox, &QComboBox::currentIndexChanged, [=](){ updateOrder("I"); updatePowerConversion(); });
 
     connect(ui->Enter_pushButton, &QPushButton::clicked, this, &MainWindow::updatePowerConversion);
 
@@ -261,6 +269,8 @@ void MainWindow::on_actionAbout_triggered()
                           "5. PCB 走線電流計算及單位換算功能。<br/>"
                           "6. PCB貫孔電流計算</p>"
                           "<p>公式參考：IPC-2221 標準。</p>"
+                          "7. 公制和英制長度互換</p>"
+                          "8. 功率計算</p>"
                           "有興趣討論的話,請發郵件給我"
                           "<a href='mailto:markscat@gmail.com'>markscat@gmail.com</a></p>"
 
@@ -330,8 +340,20 @@ void MainWindow::updatePowerConversion(){
     double R_inputVal = (ui->R_Input_lineEdit->text().toDouble(&R_ok)) * (ui->Ohm_input_comboBox->currentData().toDouble());
     double P_inputVal = (ui->Power_Input_lineEdit->text().toDouble(&P_ok)) * (ui->Power_Input_comboBox->currentData().toDouble());
 
+    // --- 優先權判定邏輯 ---
+    // 如果現在有超過兩個格子有數字，我們強制只採信最後動過的兩個 (firstInput, secondInput)
+    // 其他格子的 ok 會被設為 false，這樣迴圈才會去重新計算它們
+    int currentCount = V_ok + I_ok + R_ok + P_ok;
 
-    // 2. 檢查是否至少有兩個輸入
+    if (currentCount > 2) {
+        if (firstInput != "V" && secondInput != "V") V_ok = false;
+        if (firstInput != "I" && secondInput != "I") I_ok = false;
+        if (firstInput != "R" && secondInput != "R") R_ok = false;
+        if (firstInput != "P" && secondInput != "P") P_ok = false;
+    }
+
+
+    //  檢查是否至少有兩個輸入
     int count = (V_ok ? 1 : 0) + (I_ok ? 1 : 0) + (R_ok ? 1 : 0) + (P_ok ? 1 : 0);
 
     if (count < 2) {
@@ -362,6 +384,7 @@ void MainWindow::updatePowerConversion(){
     if (I_ok) ui->I_Input_lineEdit->setText(QString::number(I_inputVal / ui->Amp_input_comboBox->currentData().toDouble(), 'g', 6));
     if (R_ok) ui->R_Input_lineEdit->setText(QString::number(R_inputVal / ui->Ohm_input_comboBox->currentData().toDouble(), 'g', 6));
     if (P_ok) ui->Power_Input_lineEdit->setText(QString::number(P_inputVal / ui->Power_Input_comboBox->currentData().toDouble(), 'g', 6));
+
 }
 
 

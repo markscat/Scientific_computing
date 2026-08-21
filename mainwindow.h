@@ -38,5 +38,10 @@ private:
     bool isCalculating = false;
 
 
+    // 記錄最後動過的兩個控制項的名稱 (例如 "V", "I", "R", "P")
+    QString firstInput = "";
+    QString secondInput = "";
+
+
 };
 #endif // MAINWINDOW_H
