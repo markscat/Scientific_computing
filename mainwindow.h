@@ -25,6 +25,10 @@ private slots:
     void on_actionAbout_triggered();
 
     void updateLengthConversion(); // 新增長度換算槽函數
+    void updatePowerConversion();
+
+
+    void on_clearButton_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -32,6 +36,11 @@ private:
     UnitConverterHandler *handler; // <--- 在這裡宣告它！
 
     bool isCalculating = false;
+
+
+    // 記錄最後動過的兩個控制項的名稱 (例如 "V", "I", "R", "P")
+    QString firstInput = "";
+    QString secondInput = "";
 
 
 };
